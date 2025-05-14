@@ -1,2 +1,0 @@
-# Fotozeiten
-Fotozeitenkalender für Westerhever
