@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: '0 4 * * *'   # Täglich um 4:00 UTC (5:00 MEZ)
   workflow_dispatch:       # Manuell auslösbar
+  
+permissions:
+  contents: write  # ✅ GitHub erlaubt diesem Workflow, ins Repo zu schreiben
 
 jobs:
   build:
