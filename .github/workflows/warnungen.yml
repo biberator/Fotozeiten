@@ -24,7 +24,7 @@ jobs:
           pip install requests icalendar pytz
 
       - name: Wetterwarnungen generieren
-        run: python scripts/generate_warnungen.py
+        run: python generate_warnungen.py
 
       - name: Commit und Push (wenn Änderungen)
         run: |
