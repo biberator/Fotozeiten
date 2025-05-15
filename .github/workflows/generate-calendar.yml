@@ -13,17 +13,17 @@ jobs:
       - name: 📥 Repository klonen
         uses: actions/checkout@v3
 
-      - name: 🔍 Inhalt prüfen (Debug)
-        run: ls -R
+      - name: 🔍 Dateien anzeigen (Debug)
+        run: ls -la
 
       - name: 🐍 Python installieren
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - name: 🧰 Abhängigkeiten installieren
+      - name: 🧰 Abhängigkeiten direkt installieren
         run: |
-          pip install -r requirements.txt
+          pip install requests astral icalendar python-dotenv pytz
 
       - name: 📁 docs-Ordner sicherstellen
         run: mkdir -p docs
