@@ -13,6 +13,9 @@ jobs:
       - name: 📥 Repository klonen
         uses: actions/checkout@v3
 
+      - name: 🔍 Inhalt prüfen (Debug)
+        run: ls -R
+
       - name: 🐍 Python installieren
         uses: actions/setup-python@v4
         with:
@@ -21,6 +24,9 @@ jobs:
       - name: 🧰 Abhängigkeiten installieren
         run: |
           pip install -r requirements.txt
+
+      - name: 📁 docs-Ordner sicherstellen
+        run: mkdir -p docs
 
       - name: 🧮 Kalender generieren
         run: python kalender_generator.py
