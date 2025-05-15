@@ -31,6 +31,8 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git add warnungen-dk.ics
+          mkdir -p docs
+          mv warnungen-dk.ics docs/warnungen-dk.ics
+          git add docs/warnungen-dk.ics
           git commit -m "Automatische Aktualisierung der Wetterwarnungen" || echo "Nichts zu committen"
           git push
