@@ -1,0 +1,35 @@
+name: Wetterwarnungen
+
+on:
+  schedule:
+    - cron: '0 5 * * *'  # Täglich um 05:00 UTC
+  workflow_dispatch:
+
+jobs:
+  generate_warnungen:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo auschecken
+        uses: actions/checkout@v3
+
+      - name: Python einrichten
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Abhängigkeiten installieren
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests icalendar pytz
+
+      - name: Wetterwarnungen generieren
+        run: python scripts/generate_warnungen.py
+
+      - name: Commit und Push (wenn Änderungen)
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add warnungen-dk.ics
+          git diff --cached --quiet || git commit -m "Automatische Aktualisierung der Wetterwarnungen"
+          git push
