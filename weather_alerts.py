@@ -1,19 +1,20 @@
 import requests
 
-def get_weather_data(lat, lon, api_key):
-    url = "https://api.openweathermap.org/data/2.5/weather"
+def get_weather_data_onecall(lat, lon, api_key):
+    url = "https://api.openweathermap.org/data/3.0/onecall"
     params = {
         "lat": lat,
         "lon": lon,
         "appid": api_key,
-        "units": "metric"
+        "units": "metric",
+        "exclude": "current,minutely,hourly,daily"
     }
     resp = requests.get(url, params=params)
     resp.raise_for_status()
     return resp.json()
 
 def check_sturmflut(lat, lon, api_key):
-    data = get_weather_data(lat, lon, api_key)
+    data = get_weather_data_onecall(lat, lon, api_key)
 
     warning_msgs = []
 
