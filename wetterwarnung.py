@@ -68,4 +68,4 @@ def update_ics_with_alerts(alerts):
     os.makedirs(os.path.dirname(ics_path), exist_ok=True)
     with open(ics_path, "wb") as f:
         f.write(cal.to_ical())
-    print("✅ Wetterwarnung in Kale
+    print("✅ Wetterwarnung in Kalender ergänzt.")
