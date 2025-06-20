@@ -4,7 +4,7 @@ import pytz
 import requests
 from datetime import datetime, timedelta
 from astral import LocationInfo
-from astral.sun import sun, dawn, dusk
+from astral.sun import sun, dawn, dusk, golden_hour
 from astral.location import Observer
 from icalendar import Calendar, Event
 from dotenv import load_dotenv
@@ -77,14 +77,8 @@ def generate_calendar():
             s = sun(observer, date=current_date, tzinfo=tz)
             dawn_start = dawn(observer, date=current_date, tzinfo=tz)
             dusk_end = dusk(observer, date=current_date, tzinfo=tz)
-
-            # Goldene Stunde morgens = von dawn bis sunrise (approx.)
-            gh_morning_start = dawn_start
-            gh_morning_end = s["sunrise"]
-
-            # Goldene Stunde abends = von sunset bis dusk (approx.)
-            gh_evening_start = s["sunset"]
-            gh_evening_end = dusk_end
+            gh_morning = golden_hour(observer, date=current_date, tzinfo=tz, direction=1)   # morgens
+            gh_evening = golden_hour(observer, date=current_date, tzinfo=tz, direction=-1)  # abends
 
             # Gezeiten für den Tag
             tides = tide_by_date.get(current_date, [])
@@ -97,14 +91,11 @@ def generate_calendar():
             time_events = [
                 (s['sunrise'], "🌅 SA"),
                 (s['sunset'], "🌇 SU"),
-                (gh_morning_start, "✨ GS morgens Start"),
-                (gh_morning_end, "✨ GS morgens Ende"),
-                (gh_evening_start, "✨ GS abends Start"),
-                (gh_evening_end, "✨ GS abends Ende"),
                 (dawn_start, "🔵 BS morgens Start"),
-                (s['sunrise'], "🔵 BS morgens Ende"),
                 (s['sunset'], "🔵 BS abends Start"),
-                (dusk_end, "🔵 BS abends Ende"),
+                # Goldene Stunde jeweils nur mit Startzeit, die nach BS beginnt:
+                (gh_morning[0], "✨ GS morgens Start"),
+                (gh_evening[0], "✨ GS abends Start"),
             ]
 
             # Alle Events zusammenfassen und nach Zeit sortieren
