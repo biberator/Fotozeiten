@@ -4,7 +4,7 @@ import pytz
 import requests
 from datetime import datetime, timedelta
 from astral import LocationInfo
-from astral.sun import sun, golden_hour, dawn, dusk
+from astral.sun import sun, dawn, dusk
 from astral.location import Observer
 from icalendar import Calendar, Event
 from dotenv import load_dotenv
@@ -75,28 +75,46 @@ def generate_calendar():
     while current_date <= end_date:
         try:
             s = sun(observer, date=current_date, tzinfo=tz)
-            gh = golden_hour(observer, date=current_date, tzinfo=tz)
             dawn_start = dawn(observer, date=current_date, tzinfo=tz)
             dusk_end = dusk(observer, date=current_date, tzinfo=tz)
 
+            # Goldene Stunde morgens = von dawn bis sunrise (approx.)
+            gh_morning_start = dawn_start
+            gh_morning_end = s["sunrise"]
+
+            # Goldene Stunde abends = von sunset bis dusk (approx.)
+            gh_evening_start = s["sunset"]
+            gh_evening_end = dusk_end
+
             # Gezeiten für den Tag
             tides = tide_by_date.get(current_date, [])
-            tide_lines = [
-                f"{'🔺' if t[0] == 'High' else '🔻'} {t[1].strftime('%H:%M')} Uhr"
+            tide_events = [
+                (t[1], f"{'🔺' if t[0] == 'High' else '🔻'} {t[1].strftime('%H:%M')} Uhr")
                 for t in tides
             ]
 
-            # Beschreibung zusammensetzen (abgekürzt)
-            beschreibung = "\n".join([
-                f"🌅 SA: {s['sunrise'].strftime('%H:%M')}",
-                f"🌇 SU: {s['sunset'].strftime('%H:%M')}",
-                f"✨ GS: {gh[0].strftime('%H:%M')} – {gh[1].strftime('%H:%M')}",
-                f"🔵 BS morgens: {dawn_start.strftime('%H:%M')} – {s['sunrise'].strftime('%H:%M')}",
-                f"🔵 BS abends: {s['sunset'].strftime('%H:%M')} – {dusk_end.strftime('%H:%M')}",
-                "",
-                "🌊 Gezeiten:",
-                *tide_lines
-            ])
+            # Sonnen- und Dämmerungszeiten als Events mit Zeitstempel
+            time_events = [
+                (s['sunrise'], "🌅 SA"),
+                (s['sunset'], "🌇 SU"),
+                (gh_morning_start, "✨ GS morgens Start"),
+                (gh_morning_end, "✨ GS morgens Ende"),
+                (gh_evening_start, "✨ GS abends Start"),
+                (gh_evening_end, "✨ GS abends Ende"),
+                (dawn_start, "🔵 BS morgens Start"),
+                (s['sunrise'], "🔵 BS morgens Ende"),
+                (s['sunset'], "🔵 BS abends Start"),
+                (dusk_end, "🔵 BS abends Ende"),
+            ]
+
+            # Alle Events zusammenfassen und nach Zeit sortieren
+            all_events = tide_events + time_events
+            all_events.sort(key=lambda x: x[0])
+
+            # Beschreibung aus den sortierten Events zusammenbauen
+            beschreibung = "\n".join(
+                f"{label}: {dt.strftime('%H:%M')}" for dt, label in all_events
+            )
 
             # Ein Kalendereintrag als Tagesüberblick
             event = Event()
