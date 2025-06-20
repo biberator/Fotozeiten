@@ -4,9 +4,9 @@ on:
   schedule:
     - cron: '0 3 * * 1'  # jeden Montag um 03:00 UTC (4:00 MEZ)
   workflow_dispatch:       # Manuell auslösbar
-  
+
 permissions:
-  contents: write  # ✅ GitHub erlaubt diesem Workflow, ins Repo zu schreiben
+  contents: write
 
 jobs:
   build:
@@ -31,15 +31,16 @@ jobs:
       - name: 📁 docs-Ordner sicherstellen
         run: mkdir -p docs
 
-      - name: 🧮 Kalender generieren
+      - name: 🧮 Kalender generieren mit Wetterwarnung
         run: python kalender_generator.py
         env:
           WORLDTIDES_API_KEY: ${{ secrets.WORLDTIDES_API_KEY }}
+          OPENWEATHERMAP_API_KEY: ${{ secrets.OPENWEATHERMAP_API_KEY }}
 
       - name: 🚀 Änderungen committen und pushen
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add docs/fotozeiten-westerhever.ics
-          git commit -m "🔄 Automatisch aktualisierter Kalender" || echo "Keine Änderungen"
+          git commit -m "🔄 Automatisch aktualisierter Kalender mit Wetterwarnung" || echo "Keine Änderungen"
           git push
