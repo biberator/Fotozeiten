@@ -2,7 +2,7 @@ name: Update Kalender automatisch
 
 on:
   schedule:
-    - cron: '0 4 * * *'   # Täglich um 4:00 UTC (5:00 MEZ)
+    - cron: '0 3 * * 1'  # jeden Montag um 03:00 UTC (4:00 MEZ)
   workflow_dispatch:       # Manuell auslösbar
   
 permissions:
