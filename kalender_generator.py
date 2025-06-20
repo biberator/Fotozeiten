@@ -86,13 +86,13 @@ def generate_calendar():
                 for t in tides
             ]
 
-            # Beschreibung zusammensetzen
+            # Beschreibung zusammensetzen (abgekürzt)
             beschreibung = "\n".join([
-                f"🌅 Sonnenaufgang: {s['sunrise'].strftime('%H:%M')}",
-                f"🌇 Sonnenuntergang: {s['sunset'].strftime('%H:%M')}",
-                f"✨ Goldene Stunde: {gh[0].strftime('%H:%M')} – {gh[1].strftime('%H:%M')}",
-                f"🔵 Blaue Stunde (morgens): {dawn_start.strftime('%H:%M')} – {s['sunrise'].strftime('%H:%M')}",
-                f"🔵 Blaue Stunde (abends): {s['sunset'].strftime('%H:%M')} – {dusk_end.strftime('%H:%M')}",
+                f"🌅 SA: {s['sunrise'].strftime('%H:%M')}",
+                f"🌇 SU: {s['sunset'].strftime('%H:%M')}",
+                f"✨ GS: {gh[0].strftime('%H:%M')} – {gh[1].strftime('%H:%M')}",
+                f"🔵 BS morgens: {dawn_start.strftime('%H:%M')} – {s['sunrise'].strftime('%H:%M')}",
+                f"🔵 BS abends: {s['sunset'].strftime('%H:%M')} – {dusk_end.strftime('%H:%M')}",
                 "",
                 "🌊 Gezeiten:",
                 *tide_lines
