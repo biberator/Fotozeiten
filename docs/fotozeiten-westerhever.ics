@@ -1,158 +1,144 @@
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Fotozeiten Westerhever//
+PRODID:-//Westerhever Fotozeiten//
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250620T000000
 DTEND;TZID=Europe/Berlin:20250621T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:✨ GS morgens Start: 03:53\n🔵 BS morgens Start: 03:53\n
- 🌅 SA: 04:50\n✨ GS morgens Ende: 04:50\n🔵 BS morgens Ende: 04:50\n
- 🔺 07:49 Uhr: 07:49\n🔻 14:29 Uhr: 14:29\n🔺 20:11 Uhr: 20:11\n🌇 
- SU: 22:03\n✨ GS abends Start: 22:03\n🔵 BS abends Start: 22:03\n✨ GS
-  abends Ende: 23:00\n🔵 BS abends Ende: 23:00
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:51\n🌇 SU: 22:02\n🔵 BS morgens: 03:55 – 04:
+ 51\n🔵 BS abends: 22:02 – 22:59\n✨ GS morgens: 04:51 – 05:51\n✨ 
+ GS abends: 21:02 – 22:02\n\n🌊 Gezeiten:\n07:49 Uhr - Flut\n14:29 Uhr 
+ - Ebbe\n20:11 Uhr - Flut
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250621T000000
 DTEND;TZID=Europe/Berlin:20250622T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:🔻 03:18 Uhr: 03:18\n✨ GS morgens Start: 03:53\n🔵 BS mo
- rgens Start: 03:53\n🌅 SA: 04:50\n✨ GS morgens Ende: 04:50\n🔵 BS mo
- rgens Ende: 04:50\n🔺 08:50 Uhr: 08:50\n🔻 15:41 Uhr: 15:41\n🔺 21:1
- 4 Uhr: 21:14\n🌇 SU: 22:03\n✨ GS abends Start: 22:03\n🔵 BS abends S
- tart: 22:03\n✨ GS abends Ende: 23:00\n🔵 BS abends Ende: 23:00
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:52\n🌇 SU: 22:02\n🔵 BS morgens: 03:55 – 04:
+ 52\n🔵 BS abends: 22:02 – 22:59\n✨ GS morgens: 04:52 – 05:52\n✨ 
+ GS abends: 21:02 – 22:02\n\n🌊 Gezeiten:\n03:18 Uhr - Ebbe\n08:50 Uhr 
+ - Flut\n15:41 Uhr - Ebbe\n21:14 Uhr - Flut
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250622T000000
 DTEND;TZID=Europe/Berlin:20250623T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:✨ GS morgens Start: 03:54\n🔵 BS morgens Start: 03:54\n
- 🔻 04:23 Uhr: 04:23\n🌅 SA: 04:51\n✨ GS morgens Ende: 04:51\n🔵 BS
-  morgens Ende: 04:51\n🔺 09:52 Uhr: 09:52\n🔻 16:49 Uhr: 16:49\n🌇 S
- U: 22:03\n✨ GS abends Start: 22:03\n🔵 BS abends Start: 22:03\n🔺 22
- :19 Uhr: 22:19\n✨ GS abends Ende: 23:00\n🔵 BS abends Ende: 23:00
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:52\n🌇 SU: 22:03\n🔵 BS morgens: 03:55 – 04:
+ 52\n🔵 BS abends: 22:03 – 22:59\n✨ GS morgens: 04:52 – 05:52\n✨ 
+ GS abends: 21:03 – 22:03\n\n🌊 Gezeiten:\n04:23 Uhr - Ebbe\n09:52 Uhr 
+ - Flut\n16:49 Uhr - Ebbe\n22:19 Uhr - Flut
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250623T000000
 DTEND;TZID=Europe/Berlin:20250624T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:✨ GS morgens Start: 03:54\n🔵 BS morgens Start: 03:54\n
- 🌅 SA: 04:51\n✨ GS morgens Ende: 04:51\n🔵 BS morgens Ende: 04:51\n
- 🔻 05:26 Uhr: 05:26\n🔺 10:53 Uhr: 10:53\n🔻 17:52 Uhr: 17:52\n🌇 
- SU: 22:03\n✨ GS abends Start: 22:03\n🔵 BS abends Start: 22:03\n✨ GS
-  abends Ende: 23:00\n🔵 BS abends Ende: 23:00\n🔺 23:24 Uhr: 23:24
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:52\n🌇 SU: 22:03\n🔵 BS morgens: 03:56 – 04:
+ 52\n🔵 BS abends: 22:03 – 22:59\n✨ GS morgens: 04:52 – 05:52\n✨ 
+ GS abends: 21:03 – 22:03\n\n🌊 Gezeiten:\n05:26 Uhr - Ebbe\n10:53 Uhr 
+ - Flut\n17:52 Uhr - Ebbe\n23:24 Uhr - Flut
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250624T000000
 DTEND;TZID=Europe/Berlin:20250625T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:✨ GS morgens Start: 03:54\n🔵 BS morgens Start: 03:54\n
- 🌅 SA: 04:51\n✨ GS morgens Ende: 04:51\n🔵 BS morgens Ende: 04:51\n
- 🔻 06:24 Uhr: 06:24\n🔺 11:53 Uhr: 11:53\n🔻 18:51 Uhr: 18:51\n🌇 
- SU: 22:03\n✨ GS abends Start: 22:03\n🔵 BS abends Start: 22:03\n✨ GS
-  abends Ende: 23:00\n🔵 BS abends Ende: 23:00
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:53\n🌇 SU: 22:03\n🔵 BS morgens: 03:56 – 04:
+ 53\n🔵 BS abends: 22:03 – 22:59\n✨ GS morgens: 04:53 – 05:53\n✨ 
+ GS abends: 21:03 – 22:03\n\n🌊 Gezeiten:\n06:24 Uhr - Ebbe\n11:53 Uhr 
+ - Flut\n18:51 Uhr - Ebbe
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250625T000000
 DTEND;TZID=Europe/Berlin:20250626T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:🔺 00:26 Uhr: 00:26\n✨ GS morgens Start: 03:55\n🔵 BS mo
- rgens Start: 03:55\n🌅 SA: 04:52\n✨ GS morgens Ende: 04:52\n🔵 BS mo
- rgens Ende: 04:52\n🔻 07:19 Uhr: 07:19\n🔺 12:49 Uhr: 12:49\n🔻 19:4
- 6 Uhr: 19:46\n🌇 SU: 22:03\n✨ GS abends Start: 22:03\n🔵 BS abends S
- tart: 22:03\n✨ GS abends Ende: 23:00\n🔵 BS abends Ende: 23:00
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:53\n🌇 SU: 22:03\n🔵 BS morgens: 03:57 – 04:
+ 53\n🔵 BS abends: 22:03 – 22:59\n✨ GS morgens: 04:53 – 05:53\n✨ 
+ GS abends: 21:03 – 22:03\n\n🌊 Gezeiten:\n00:26 Uhr - Flut\n07:19 Uhr 
+ - Ebbe\n12:49 Uhr - Flut\n19:46 Uhr - Ebbe
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250626T000000
 DTEND;TZID=Europe/Berlin:20250627T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:🔺 01:25 Uhr: 01:25\n✨ GS morgens Start: 03:55\n🔵 BS mo
- rgens Start: 03:55\n🌅 SA: 04:52\n✨ GS morgens Ende: 04:52\n🔵 BS mo
- rgens Ende: 04:52\n🔻 08:10 Uhr: 08:10\n🔺 13:43 Uhr: 13:43\n🔻 20:3
- 8 Uhr: 20:38\n🌇 SU: 22:03\n✨ GS abends Start: 22:03\n🔵 BS abends S
- tart: 22:03\n✨ GS abends Ende: 23:00\n🔵 BS abends Ende: 23:00
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:53\n🌇 SU: 22:03\n🔵 BS morgens: 03:57 – 04:
+ 53\n🔵 BS abends: 22:03 – 22:59\n✨ GS morgens: 04:53 – 05:53\n✨ 
+ GS abends: 21:03 – 22:03\n\n🌊 Gezeiten:\n01:25 Uhr - Flut\n08:10 Uhr 
+ - Ebbe\n13:43 Uhr - Flut\n20:38 Uhr - Ebbe
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250627T000000
 DTEND;TZID=Europe/Berlin:20250628T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:🔺 02:19 Uhr: 02:19\n✨ GS morgens Start: 03:56\n🔵 BS mo
- rgens Start: 03:56\n🌅 SA: 04:53\n✨ GS morgens Ende: 04:53\n🔵 BS mo
- rgens Ende: 04:53\n🔻 08:57 Uhr: 08:57\n🔺 14:33 Uhr: 14:33\n🔻 21:2
- 6 Uhr: 21:26\n🌇 SU: 22:03\n✨ GS abends Start: 22:03\n🔵 BS abends S
- tart: 22:03\n✨ GS abends Ende: 23:00\n🔵 BS abends Ende: 23:00
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:54\n🌇 SU: 22:02\n🔵 BS morgens: 03:58 – 04:
+ 54\n🔵 BS abends: 22:02 – 22:58\n✨ GS morgens: 04:54 – 05:54\n✨ 
+ GS abends: 21:02 – 22:02\n\n🌊 Gezeiten:\n02:19 Uhr - Flut\n08:57 Uhr 
+ - Ebbe\n14:33 Uhr - Flut\n21:26 Uhr - Ebbe
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250628T000000
 DTEND;TZID=Europe/Berlin:20250629T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:🔺 03:08 Uhr: 03:08\n✨ GS morgens Start: 03:57\n🔵 BS mo
- rgens Start: 03:57\n🌅 SA: 04:53\n✨ GS morgens Ende: 04:53\n🔵 BS mo
- rgens Ende: 04:53\n🔻 09:42 Uhr: 09:42\n🔺 15:21 Uhr: 15:21\n🌇 SU: 
- 22:03\n✨ GS abends Start: 22:03\n🔵 BS abends Start: 22:03\n🔻 22:12
-  Uhr: 22:12\n✨ GS abends Ende: 22:59\n🔵 BS abends Ende: 22:59
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:55\n🌇 SU: 22:02\n🔵 BS morgens: 03:59 – 04:
+ 55\n🔵 BS abends: 22:02 – 22:58\n✨ GS morgens: 04:55 – 05:55\n✨ 
+ GS abends: 21:02 – 22:02\n\n🌊 Gezeiten:\n03:08 Uhr - Flut\n09:42 Uhr 
+ - Ebbe\n15:21 Uhr - Flut\n22:12 Uhr - Ebbe
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250629T000000
 DTEND;TZID=Europe/Berlin:20250630T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:🔺 03:52 Uhr: 03:52\n✨ GS morgens Start: 03:58\n🔵 BS mo
- rgens Start: 03:58\n🌅 SA: 04:54\n✨ GS morgens Ende: 04:54\n🔵 BS mo
- rgens Ende: 04:54\n🔻 10:24 Uhr: 10:24\n🔺 16:06 Uhr: 16:06\n🌇 SU: 
- 22:03\n✨ GS abends Start: 22:03\n🔵 BS abends Start: 22:03\n🔻 22:57
-  Uhr: 22:57\n✨ GS abends Ende: 22:59\n🔵 BS abends Ende: 22:59
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:55\n🌇 SU: 22:02\n🔵 BS morgens: 03:59 – 04:
+ 55\n🔵 BS abends: 22:02 – 22:58\n✨ GS morgens: 04:55 – 05:55\n✨ 
+ GS abends: 21:02 – 22:02\n\n🌊 Gezeiten:\n03:52 Uhr - Flut\n10:24 Uhr 
+ - Ebbe\n16:06 Uhr - Flut\n22:57 Uhr - Ebbe
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250630T000000
 DTEND;TZID=Europe/Berlin:20250701T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:✨ GS morgens Start: 03:58\n🔵 BS morgens Start: 03:58\n
- 🔺 04:34 Uhr: 04:34\n🌅 SA: 04:55\n✨ GS morgens Ende: 04:55\n🔵 BS
-  morgens Ende: 04:55\n🔻 11:06 Uhr: 11:06\n🔺 16:50 Uhr: 16:50\n🌇 S
- U: 22:02\n✨ GS abends Start: 22:02\n🔵 BS abends Start: 22:02\n✨ GS 
- abends Ende: 22:58\n🔵 BS abends Ende: 22:58\n🔻 23:41 Uhr: 23:41
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:56\n🌇 SU: 22:02\n🔵 BS morgens: 04:00 – 04:
+ 56\n🔵 BS abends: 22:02 – 22:57\n✨ GS morgens: 04:56 – 05:56\n✨ 
+ GS abends: 21:02 – 22:02\n\n🌊 Gezeiten:\n04:34 Uhr - Flut\n11:06 Uhr 
+ - Ebbe\n16:50 Uhr - Flut\n23:41 Uhr - Ebbe
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250701T000000
 DTEND;TZID=Europe/Berlin:20250702T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:✨ GS morgens Start: 03:59\n🔵 BS morgens Start: 03:59\n
- 🌅 SA: 04:55\n✨ GS morgens Ende: 04:55\n🔵 BS morgens Ende: 04:55\n
- 🔺 05:17 Uhr: 05:17\n🔻 11:48 Uhr: 11:48\n🔺 17:35 Uhr: 17:35\n🌇 
- SU: 22:02\n✨ GS abends Start: 22:02\n🔵 BS abends Start: 22:02\n✨ GS
-  abends Ende: 22:58\n🔵 BS abends Ende: 22:58
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:57\n🌇 SU: 22:01\n🔵 BS morgens: 04:01 – 04:
+ 57\n🔵 BS abends: 22:01 – 22:57\n✨ GS morgens: 04:57 – 05:57\n✨ 
+ GS abends: 21:01 – 22:01\n\n🌊 Gezeiten:\n05:17 Uhr - Flut\n11:48 Uhr 
+ - Ebbe\n17:35 Uhr - Flut
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250702T000000
 DTEND;TZID=Europe/Berlin:20250703T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:🔻 00:26 Uhr: 00:26\n✨ GS morgens Start: 04:00\n🔵 BS mo
- rgens Start: 04:00\n🌅 SA: 04:56\n✨ GS morgens Ende: 04:56\n🔵 BS mo
- rgens Ende: 04:56\n🔺 06:02 Uhr: 06:02\n🔻 12:34 Uhr: 12:34\n🔺 18:2
- 2 Uhr: 18:22\n🌇 SU: 22:02\n✨ GS abends Start: 22:02\n🔵 BS abends S
- tart: 22:02\n✨ GS abends Ende: 22:57\n🔵 BS abends Ende: 22:57
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:57\n🌇 SU: 22:01\n🔵 BS morgens: 04:02 – 04:
+ 57\n🔵 BS abends: 22:01 – 22:56\n✨ GS morgens: 04:57 – 05:57\n✨ 
+ GS abends: 21:01 – 22:01\n\n🌊 Gezeiten:\n00:26 Uhr - Ebbe\n06:02 Uhr 
+ - Flut\n12:34 Uhr - Ebbe\n18:22 Uhr - Flut
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250703T000000
 DTEND;TZID=Europe/Berlin:20250704T000000
-DTSTAMP:20250620T091241Z
-DESCRIPTION:🔻 01:14 Uhr: 01:14\n✨ GS morgens Start: 04:01\n🔵 BS mo
- rgens Start: 04:01\n🌅 SA: 04:57\n✨ GS morgens Ende: 04:57\n🔵 BS mo
- rgens Ende: 04:57\n🔺 06:51 Uhr: 06:51\n🔻 13:26 Uhr: 13:26\n🔺 19:1
- 1 Uhr: 19:11\n🌇 SU: 22:01\n✨ GS abends Start: 22:01\n🔵 BS abends S
- tart: 22:01\n✨ GS abends Ende: 22:56\n🔵 BS abends Ende: 22:56
+DTSTAMP:20250620T093358Z
+DESCRIPTION:🌅 SA: 04:58\n🌇 SU: 22:00\n🔵 BS morgens: 04:03 – 04:
+ 58\n🔵 BS abends: 22:00 – 22:55\n✨ GS morgens: 04:58 – 05:58\n✨ 
+ GS abends: 21:00 – 22:00\n\n🌊 Gezeiten:\n01:14 Uhr - Ebbe\n06:51 Uhr 
+ - Flut\n13:26 Uhr - Ebbe\n19:11 Uhr - Flut
 END:VEVENT
 END:VCALENDAR
