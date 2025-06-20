@@ -28,22 +28,6 @@ cal = Calendar()
 cal.add("prodid", "-//Fotozeiten Westerhever//")
 cal.add("version", "2.0")
 
-def add_event(summary, dt, duration_minutes=0):
-    event = Event()
-    event.add("summary", summary)
-    event.add("dtstart", dt)
-    event.add("dtend", dt + timedelta(minutes=duration_minutes))
-    event.add("dtstamp", datetime.now(pytz.utc))
-    cal.add_component(event)
-
-def add_period(summary, start_dt, end_dt):
-    event = Event()
-    event.add("summary", summary)
-    event.add("dtstart", start_dt)
-    event.add("dtend", end_dt)
-    event.add("dtstamp", datetime.now(pytz.utc))
-    cal.add_component(event)
-
 # Gezeiten organisieren
 def build_tide_lookup(tides_raw):
     tide_by_date = {}
@@ -55,7 +39,7 @@ def build_tide_lookup(tides_raw):
         tide_by_date[date].append((tide["type"], dt))
     return tide_by_date
 
-# Wetterwarnungen (One Call API 3.0, nur wenn nötig)
+# Wetterwarnungen (OpenWeatherMap One Call 3.0)
 def get_weather_alerts(lat, lon, api_key):
     url = "https://api.openweathermap.org/data/3.0/onecall"
     params = {
@@ -87,7 +71,6 @@ def generate_calendar():
     print(f"🌊 Gezeitendaten (aus Cache oder API): {len(tides_raw)} Einträge erhalten.")
     tide_by_date = build_tide_lookup(tides_raw)
 
-    total = 0
     current_date = start_date
     while current_date <= end_date:
         try:
@@ -115,7 +98,7 @@ def generate_calendar():
                 *tide_lines
             ])
 
-            # Sammel-Eintrag als ganztägiger Event
+            # Ein Kalendereintrag als Tagesüberblick
             event = Event()
             event.add("summary", "📋 Tagesüberblick")
             event.add("dtstart", tz.localize(datetime.combine(current_date, datetime.min.time())))
@@ -128,7 +111,7 @@ def generate_calendar():
             print(f"⚠️ Fehler bei {current_date}: {e}")
         current_date += timedelta(days=1)
 
-      # Wetterwarnung einmalig prüfen (optional)
+    # Wetterwarnung optional als separater Eintrag
     owm_api_key = os.getenv("OPENWEATHERMAP_API_KEY")
     if owm_api_key:
         alerts = get_weather_alerts(location.latitude, location.longitude, owm_api_key)
@@ -143,10 +126,14 @@ def generate_calendar():
             event.add("description", beschreibung)
             cal.add_component(event)
 
-    # Ordner sicherstellen und Kalender speichern
+    # Kalender speichern
     os.makedirs("docs", exist_ok=True)
     with open("docs/fotozeiten-westerhever.ics", "wb") as f:
         f.write(cal.to_ical())
 
     print("📅 Kalender erstellt: docs/fotozeiten-westerhever.ics")
     print(f"✅ Gesamtzahl der Kalendereinträge: {len(cal.subcomponents)}")
+
+# Ausführen
+if __name__ == "__main__":
+    generate_calendar()
