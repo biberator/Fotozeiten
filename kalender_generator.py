@@ -118,11 +118,20 @@ def generate_calendar():
         current_date += timedelta(days=1)
 
     # Wetterwarnung einmalig prüfen
-    owm_api_key = os.getenv("OPENWEATHERMAP_API_KEY")
-    if owm_api_key:
-        alerts = get_weather_alerts(location.latitude, location.longitude, owm_api_key)
-        for msg in alerts:
-            add_event(f"⚠️ Wetterwarnung: {msg}", datetime.now(tz))
+owm_api_key = os.getenv("OPENWEATHERMAP_API_KEY")
+if owm_api_key:
+    alerts = get_weather_alerts(location.latitude, location.longitude, owm_api_key)
+    if alerts:
+        description = "\n\n".join(alerts)
+        now = datetime.now(tz)
+        event = Event()
+        event.add("summary", "⚠️ Wetterwarnungen")
+        event.add("dtstart", now)
+        event.add("dtend", now + timedelta(hours=1))
+        event.add("dtstamp", datetime.now(pytz.utc))
+        event.add("description", description)
+        event.add("uid", "wetterwarnungen-westerhever@example.com")
+        cal.add_component(event)
 
     # Ordner sicherstellen
     os.makedirs("docs", exist_ok=True)
