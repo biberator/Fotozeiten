@@ -92,55 +92,61 @@ def generate_calendar():
     while current_date <= end_date:
         try:
             s = sun(observer, date=current_date, tzinfo=tz)
-
-            # Sonnenaufgang/-untergang als Zeitpunkte
-            add_event("🌅 Sonnenaufgang", s["sunrise"])
-            add_event("🌇 Sonnenuntergang", s["sunset"])
-
-            # Goldene Stunde (abends)
             gh = golden_hour(observer, date=current_date, tzinfo=tz)
-            add_period("✨ Goldene Stunde", gh[0], gh[1])
-
-            # Blaue Stunde = Nautische Dämmerung (vor Sonnenaufgang & nach Sonnenuntergang)
             dawn_start = dawn(observer, date=current_date, tzinfo=tz)
             dusk_end = dusk(observer, date=current_date, tzinfo=tz)
-            add_period("🔵 Blaue Stunde (morgens)", dawn_start, s["sunrise"])
-            add_period("🔵 Blaue Stunde (abends)", s["sunset"], dusk_end)
 
-            # Gezeiten
-            for tide_type, tide_dt in tide_by_date.get(current_date, []):
-                symbol = "🔺" if tide_type == "High" else "🔻"
-                label = "Hochwasser" if tide_type == "High" else "Niedrigwasser"
-                add_event(f"{symbol} {label}", tide_dt)
+            # Gezeiten für den Tag
+            tides = tide_by_date.get(current_date, [])
+            tide_lines = [
+                f"{'🔺' if t[0] == 'High' else '🔻'} {t[1].strftime('%H:%M')} Uhr"
+                for t in tides
+            ]
+
+            # Beschreibung zusammensetzen
+            beschreibung = "\n".join([
+                f"🌅 Sonnenaufgang: {s['sunrise'].strftime('%H:%M')}",
+                f"🌇 Sonnenuntergang: {s['sunset'].strftime('%H:%M')}",
+                f"✨ Goldene Stunde: {gh[0].strftime('%H:%M')} – {gh[1].strftime('%H:%M')}",
+                f"🔵 Blaue Stunde (morgens): {dawn_start.strftime('%H:%M')} – {s['sunrise'].strftime('%H:%M')}",
+                f"🔵 Blaue Stunde (abends): {s['sunset'].strftime('%H:%M')} – {dusk_end.strftime('%H:%M')}",
+                "",
+                "🌊 Gezeiten:",
+                *tide_lines
+            ])
+
+            # Sammel-Eintrag als ganztägiger Event
+            event = Event()
+            event.add("summary", "📋 Tagesüberblick")
+            event.add("dtstart", tz.localize(datetime.combine(current_date, datetime.min.time())))
+            event.add("dtend", tz.localize(datetime.combine(current_date + timedelta(days=1), datetime.min.time())))
+            event.add("dtstamp", datetime.now(pytz.utc))
+            event.add("description", beschreibung)
+            cal.add_component(event)
 
         except Exception as e:
             print(f"⚠️ Fehler bei {current_date}: {e}")
         current_date += timedelta(days=1)
 
-    # Wetterwarnung einmalig prüfen
-owm_api_key = os.getenv("OPENWEATHERMAP_API_KEY")
-if owm_api_key:
-    alerts = get_weather_alerts(location.latitude, location.longitude, owm_api_key)
-    if alerts:
-        description = "\n\n".join(alerts)
-        now = datetime.now(tz)
-        event = Event()
-        event.add("summary", "⚠️ Wetterwarnungen")
-        event.add("dtstart", now)
-        event.add("dtend", now + timedelta(hours=1))
-        event.add("dtstamp", datetime.now(pytz.utc))
-        event.add("description", description)
-        event.add("uid", "wetterwarnungen-westerhever@example.com")
-        cal.add_component(event)
+      # Wetterwarnung einmalig prüfen (optional)
+    owm_api_key = os.getenv("OPENWEATHERMAP_API_KEY")
+    if owm_api_key:
+        alerts = get_weather_alerts(location.latitude, location.longitude, owm_api_key)
+        if alerts:
+            beschreibung = "\n\n".join(alerts)
+            event = Event()
+            event.add("summary", "⚠️ Wetterwarnung")
+            now = datetime.now(tz)
+            event.add("dtstart", now)
+            event.add("dtend", now + timedelta(hours=1))
+            event.add("dtstamp", datetime.now(pytz.utc))
+            event.add("description", beschreibung)
+            cal.add_component(event)
 
-    # Ordner sicherstellen
+    # Ordner sicherstellen und Kalender speichern
     os.makedirs("docs", exist_ok=True)
     with open("docs/fotozeiten-westerhever.ics", "wb") as f:
         f.write(cal.to_ical())
 
     print("📅 Kalender erstellt: docs/fotozeiten-westerhever.ics")
     print(f"✅ Gesamtzahl der Kalendereinträge: {len(cal.subcomponents)}")
-
-# Ausführen
-if __name__ == "__main__":
-    generate_calendar()
