@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
+import os
+import pytz
 import requests
 from datetime import datetime, timedelta
 from astral import LocationInfo
 from astral.sun import sun, golden_hour, dawn, dusk
 from astral.location import Observer
-import pytz
 from icalendar import Calendar, Event
 from dotenv import load_dotenv
-import os
+from tide_cache import get_tides  # Neuer Import für Caching
 
 # .env laden
 load_dotenv()
-API_KEY = os.getenv("WORLDTIDES_API_KEY")
 
 # Standort Westerhever
-location = LocationInfo(name="Westerhever", region="Germany", timezone="Europe/Berlin",
+tz = pytz.timezone("Europe/Berlin")
+location = LocationInfo(name="Westerhever", region="Germany", timezone=tz.zone,
                         latitude=54.3726, longitude=8.6489)
-tz = pytz.timezone(location.timezone)
 observer = Observer(latitude=location.latitude, longitude=location.longitude)
 
 # Zeitrahmen
@@ -44,22 +44,6 @@ def add_period(summary, start_dt, end_dt):
     event.add("dtstamp", datetime.now(pytz.utc))
     cal.add_component(event)
 
-# Gezeiten abrufen
-def fetch_tides():
-    url = "https://www.worldtides.info/api/v2"
-    params = {
-        "extremes": "",
-        "lat": location.latitude,
-        "lon": location.longitude,
-        "length": 60 * 60 * 24 * 14,  # 14 Tage
-        "key": API_KEY
-    }
-    response = requests.get(url, params=params)
-    data = response.json()
-    extremes = data.get("extremes", [])
-    print(f"🌊 Gezeitendaten: {len(extremes)} Einträge erhalten.")
-    return extremes
-
 # Gezeiten organisieren
 def build_tide_lookup(tides_raw):
     tide_by_date = {}
@@ -71,9 +55,36 @@ def build_tide_lookup(tides_raw):
         tide_by_date[date].append((tide["type"], dt))
     return tide_by_date
 
+# Wetterwarnungen (One Call API 3.0, nur wenn nötig)
+def get_weather_alerts(lat, lon, api_key):
+    url = "https://api.openweathermap.org/data/3.0/onecall"
+    params = {
+        "lat": lat,
+        "lon": lon,
+        "appid": api_key,
+        "units": "metric",
+        "exclude": "current,minutely,hourly,daily"
+    }
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        data = response.json()
+        alerts = data.get("alerts", [])
+        messages = []
+        for alert in alerts:
+            event = alert.get("event", "Warnung")
+            desc = alert.get("description", "")
+            messages.append(f"{event}: {desc}")
+        return messages
+    except Exception as e:
+        print(f"⚠️ Fehler bei Wetterwarnung: {e}")
+        return []
+
 # Kalender generieren
 def generate_calendar():
-    tides_raw = fetch_tides()
+    tide_data = get_tides()
+    tides_raw = tide_data.get("extremes", [])
+    print(f"🌊 Gezeitendaten (aus Cache oder API): {len(tides_raw)} Einträge erhalten.")
     tide_by_date = build_tide_lookup(tides_raw)
 
     total = 0
@@ -106,15 +117,20 @@ def generate_calendar():
             print(f"⚠️ Fehler bei {current_date}: {e}")
         current_date += timedelta(days=1)
 
+    # Wetterwarnung einmalig prüfen
+    owm_api_key = os.getenv("OPENWEATHERMAP_API_KEY")
+    if owm_api_key:
+        alerts = get_weather_alerts(location.latitude, location.longitude, owm_api_key)
+        for msg in alerts:
+            add_event(f"⚠️ Wetterwarnung: {msg}", datetime.now(tz))
+
     # Ordner sicherstellen
-        os.makedirs("docs", exist_ok=True)
+    os.makedirs("docs", exist_ok=True)
+    with open("docs/fotozeiten-westerhever.ics", "wb") as f:
+        f.write(cal.to_ical())
 
-# Kalender schreiben
-        with open("docs/fotozeiten-westerhever.ics", "wb") as f:
-            f.write(cal.to_ical())
-
-        print("📅 Kalender erstellt: docs/fotozeiten-westerhever.ics")
-        print(f"✅ Gesamtzahl der Kalendereinträge: {len(cal.subcomponents)}")
+    print("📅 Kalender erstellt: docs/fotozeiten-westerhever.ics")
+    print(f"✅ Gesamtzahl der Kalendereinträge: {len(cal.subcomponents)}")
 
 # Ausführen
 if __name__ == "__main__":
