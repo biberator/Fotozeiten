@@ -5,140 +5,126 @@ BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250620T000000
 DTEND;TZID=Europe/Berlin:20250621T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:50\n🌇 Sonnenuntergang: 22:03\n✨ Go
- ldene Stunde: 04:16 – 05:49\n🔵 Blaue Stunde (morgens): 03:53 – 04:5
- 0\n🔵 Blaue Stunde (abends): 22:03 – 23:00\n\n🌊 Gezeiten:\n🔺 07:
- 49 Uhr\n🔻 14:29 Uhr\n🔺 20:11 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:50\n🌇 SU: 22:03\n✨ GS: 04:16 – 05:49\n🔵 
+ BS morgens: 03:53 – 04:50\n🔵 BS abends: 22:03 – 23:00\n\n🌊 Gezei
+ ten:\n🔺 07:49 Uhr\n🔻 14:29 Uhr\n🔺 20:11 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250621T000000
 DTEND;TZID=Europe/Berlin:20250622T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:50\n🌇 Sonnenuntergang: 22:03\n✨ Go
- ldene Stunde: 04:16 – 05:49\n🔵 Blaue Stunde (morgens): 03:53 – 04:5
- 0\n🔵 Blaue Stunde (abends): 22:03 – 23:00\n\n🌊 Gezeiten:\n🔻 03:
- 18 Uhr\n🔺 08:50 Uhr\n🔻 15:41 Uhr\n🔺 21:14 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:50\n🌇 SU: 22:03\n✨ GS: 04:16 – 05:49\n🔵 
+ BS morgens: 03:53 – 04:50\n🔵 BS abends: 22:03 – 23:00\n\n🌊 Gezei
+ ten:\n🔻 03:18 Uhr\n🔺 08:50 Uhr\n🔻 15:41 Uhr\n🔺 21:14 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250622T000000
 DTEND;TZID=Europe/Berlin:20250623T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:51\n🌇 Sonnenuntergang: 22:03\n✨ Go
- ldene Stunde: 04:17 – 05:49\n🔵 Blaue Stunde (morgens): 03:54 – 04:5
- 1\n🔵 Blaue Stunde (abends): 22:03 – 23:00\n\n🌊 Gezeiten:\n🔻 04:
- 23 Uhr\n🔺 09:52 Uhr\n🔻 16:49 Uhr\n🔺 22:19 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:51\n🌇 SU: 22:03\n✨ GS: 04:17 – 05:49\n🔵 
+ BS morgens: 03:54 – 04:51\n🔵 BS abends: 22:03 – 23:00\n\n🌊 Gezei
+ ten:\n🔻 04:23 Uhr\n🔺 09:52 Uhr\n🔻 16:49 Uhr\n🔺 22:19 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250623T000000
 DTEND;TZID=Europe/Berlin:20250624T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:51\n🌇 Sonnenuntergang: 22:03\n✨ Go
- ldene Stunde: 04:17 – 05:49\n🔵 Blaue Stunde (morgens): 03:54 – 04:5
- 1\n🔵 Blaue Stunde (abends): 22:03 – 23:00\n\n🌊 Gezeiten:\n🔻 05:
- 26 Uhr\n🔺 10:53 Uhr\n🔻 17:52 Uhr\n🔺 23:24 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:51\n🌇 SU: 22:03\n✨ GS: 04:17 – 05:49\n🔵 
+ BS morgens: 03:54 – 04:51\n🔵 BS abends: 22:03 – 23:00\n\n🌊 Gezei
+ ten:\n🔻 05:26 Uhr\n🔺 10:53 Uhr\n🔻 17:52 Uhr\n🔺 23:24 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250624T000000
 DTEND;TZID=Europe/Berlin:20250625T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:51\n🌇 Sonnenuntergang: 22:03\n✨ Go
- ldene Stunde: 04:17 – 05:50\n🔵 Blaue Stunde (morgens): 03:54 – 04:5
- 1\n🔵 Blaue Stunde (abends): 22:03 – 23:00\n\n🌊 Gezeiten:\n🔻 06:
- 24 Uhr\n🔺 11:53 Uhr\n🔻 18:51 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:51\n🌇 SU: 22:03\n✨ GS: 04:17 – 05:50\n🔵 
+ BS morgens: 03:54 – 04:51\n🔵 BS abends: 22:03 – 23:00\n\n🌊 Gezei
+ ten:\n🔻 06:24 Uhr\n🔺 11:53 Uhr\n🔻 18:51 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250625T000000
 DTEND;TZID=Europe/Berlin:20250626T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:52\n🌇 Sonnenuntergang: 22:03\n✨ Go
- ldene Stunde: 04:18 – 05:50\n🔵 Blaue Stunde (morgens): 03:55 – 04:5
- 2\n🔵 Blaue Stunde (abends): 22:03 – 23:00\n\n🌊 Gezeiten:\n🔺 00:
- 26 Uhr\n🔻 07:19 Uhr\n🔺 12:49 Uhr\n🔻 19:46 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:52\n🌇 SU: 22:03\n✨ GS: 04:18 – 05:50\n🔵 
+ BS morgens: 03:55 – 04:52\n🔵 BS abends: 22:03 – 23:00\n\n🌊 Gezei
+ ten:\n🔺 00:26 Uhr\n🔻 07:19 Uhr\n🔺 12:49 Uhr\n🔻 19:46 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250626T000000
 DTEND;TZID=Europe/Berlin:20250627T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:52\n🌇 Sonnenuntergang: 22:03\n✨ Go
- ldene Stunde: 04:18 – 05:51\n🔵 Blaue Stunde (morgens): 03:55 – 04:5
- 2\n🔵 Blaue Stunde (abends): 22:03 – 23:00\n\n🌊 Gezeiten:\n🔺 01:
- 25 Uhr\n🔻 08:10 Uhr\n🔺 13:43 Uhr\n🔻 20:38 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:52\n🌇 SU: 22:03\n✨ GS: 04:18 – 05:51\n🔵 
+ BS morgens: 03:55 – 04:52\n🔵 BS abends: 22:03 – 23:00\n\n🌊 Gezei
+ ten:\n🔺 01:25 Uhr\n🔻 08:10 Uhr\n🔺 13:43 Uhr\n🔻 20:38 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250627T000000
 DTEND;TZID=Europe/Berlin:20250628T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:53\n🌇 Sonnenuntergang: 22:03\n✨ Go
- ldene Stunde: 04:19 – 05:51\n🔵 Blaue Stunde (morgens): 03:56 – 04:5
- 3\n🔵 Blaue Stunde (abends): 22:03 – 23:00\n\n🌊 Gezeiten:\n🔺 02:
- 19 Uhr\n🔻 08:57 Uhr\n🔺 14:33 Uhr\n🔻 21:26 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:53\n🌇 SU: 22:03\n✨ GS: 04:19 – 05:51\n🔵 
+ BS morgens: 03:56 – 04:53\n🔵 BS abends: 22:03 – 23:00\n\n🌊 Gezei
+ ten:\n🔺 02:19 Uhr\n🔻 08:57 Uhr\n🔺 14:33 Uhr\n🔻 21:26 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250628T000000
 DTEND;TZID=Europe/Berlin:20250629T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:53\n🌇 Sonnenuntergang: 22:03\n✨ Go
- ldene Stunde: 04:20 – 05:52\n🔵 Blaue Stunde (morgens): 03:57 – 04:5
- 3\n🔵 Blaue Stunde (abends): 22:03 – 22:59\n\n🌊 Gezeiten:\n🔺 03:
- 08 Uhr\n🔻 09:42 Uhr\n🔺 15:21 Uhr\n🔻 22:12 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:53\n🌇 SU: 22:03\n✨ GS: 04:20 – 05:52\n🔵 
+ BS morgens: 03:57 – 04:53\n🔵 BS abends: 22:03 – 22:59\n\n🌊 Gezei
+ ten:\n🔺 03:08 Uhr\n🔻 09:42 Uhr\n🔺 15:21 Uhr\n🔻 22:12 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250629T000000
 DTEND;TZID=Europe/Berlin:20250630T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:54\n🌇 Sonnenuntergang: 22:03\n✨ Go
- ldene Stunde: 04:20 – 05:52\n🔵 Blaue Stunde (morgens): 03:58 – 04:5
- 4\n🔵 Blaue Stunde (abends): 22:03 – 22:59\n\n🌊 Gezeiten:\n🔺 03:
- 52 Uhr\n🔻 10:24 Uhr\n🔺 16:06 Uhr\n🔻 22:57 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:54\n🌇 SU: 22:03\n✨ GS: 04:20 – 05:52\n🔵 
+ BS morgens: 03:58 – 04:54\n🔵 BS abends: 22:03 – 22:59\n\n🌊 Gezei
+ ten:\n🔺 03:52 Uhr\n🔻 10:24 Uhr\n🔺 16:06 Uhr\n🔻 22:57 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250630T000000
 DTEND;TZID=Europe/Berlin:20250701T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:55\n🌇 Sonnenuntergang: 22:02\n✨ Go
- ldene Stunde: 04:21 – 05:53\n🔵 Blaue Stunde (morgens): 03:58 – 04:5
- 5\n🔵 Blaue Stunde (abends): 22:02 – 22:58\n\n🌊 Gezeiten:\n🔺 04:
- 34 Uhr\n🔻 11:06 Uhr\n🔺 16:50 Uhr\n🔻 23:41 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:55\n🌇 SU: 22:02\n✨ GS: 04:21 – 05:53\n🔵 
+ BS morgens: 03:58 – 04:55\n🔵 BS abends: 22:02 – 22:58\n\n🌊 Gezei
+ ten:\n🔺 04:34 Uhr\n🔻 11:06 Uhr\n🔺 16:50 Uhr\n🔻 23:41 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250701T000000
 DTEND;TZID=Europe/Berlin:20250702T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:55\n🌇 Sonnenuntergang: 22:02\n✨ Go
- ldene Stunde: 04:22 – 05:53\n🔵 Blaue Stunde (morgens): 03:59 – 04:5
- 5\n🔵 Blaue Stunde (abends): 22:02 – 22:58\n\n🌊 Gezeiten:\n🔺 05:
- 17 Uhr\n🔻 11:48 Uhr\n🔺 17:35 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:55\n🌇 SU: 22:02\n✨ GS: 04:22 – 05:53\n🔵 
+ BS morgens: 03:59 – 04:55\n🔵 BS abends: 22:02 – 22:58\n\n🌊 Gezei
+ ten:\n🔺 05:17 Uhr\n🔻 11:48 Uhr\n🔺 17:35 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250702T000000
 DTEND;TZID=Europe/Berlin:20250703T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:56\n🌇 Sonnenuntergang: 22:02\n✨ Go
- ldene Stunde: 04:23 – 05:54\n🔵 Blaue Stunde (morgens): 04:00 – 04:5
- 6\n🔵 Blaue Stunde (abends): 22:02 – 22:57\n\n🌊 Gezeiten:\n🔻 00:
- 26 Uhr\n🔺 06:02 Uhr\n🔻 12:34 Uhr\n🔺 18:22 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:56\n🌇 SU: 22:02\n✨ GS: 04:23 – 05:54\n🔵 
+ BS morgens: 04:00 – 04:56\n🔵 BS abends: 22:02 – 22:57\n\n🌊 Gezei
+ ten:\n🔻 00:26 Uhr\n🔺 06:02 Uhr\n🔻 12:34 Uhr\n🔺 18:22 Uhr
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:📋 Tagesüberblick
 DTSTART;TZID=Europe/Berlin:20250703T000000
 DTEND;TZID=Europe/Berlin:20250704T000000
-DTSTAMP:20250620T085645Z
-DESCRIPTION:🌅 Sonnenaufgang: 04:57\n🌇 Sonnenuntergang: 22:01\n✨ Go
- ldene Stunde: 04:24 – 05:55\n🔵 Blaue Stunde (morgens): 04:01 – 04:5
- 7\n🔵 Blaue Stunde (abends): 22:01 – 22:56\n\n🌊 Gezeiten:\n🔻 01:
- 14 Uhr\n🔺 06:51 Uhr\n🔻 13:26 Uhr\n🔺 19:11 Uhr
+DTSTAMP:20250620T090415Z
+DESCRIPTION:🌅 SA: 04:57\n🌇 SU: 22:01\n✨ GS: 04:24 – 05:55\n🔵 
+ BS morgens: 04:01 – 04:57\n🔵 BS abends: 22:01 – 22:56\n\n🌊 Gezei
+ ten:\n🔻 01:14 Uhr\n🔺 06:51 Uhr\n🔻 13:26 Uhr\n🔺 19:11 Uhr
 END:VEVENT
 END:VCALENDAR
