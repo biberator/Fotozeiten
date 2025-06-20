@@ -1,0 +1,39 @@
+name: Tägliche Wetterwarnung
+
+on:
+  schedule:
+    - cron: '0 5 * * *'  # täglich um 05:00 UTC (07:00 MEZ)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  warnung:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Repository klonen
+        uses: actions/checkout@v3
+
+      - name: 🐍 Python installieren
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Abhängigkeiten installieren
+        run: |
+          pip install requests astral icalendar python-dotenv pytz
+
+      - name: 🔧 Nur Wetterwarnung eintragen
+        run: python wetterwarnung.py
+        env:
+          OPENWEATHERMAP_API_KEY: ${{ secrets.OPENWEATHERMAP_API_KEY }}
+
+      - name: 🚀 Datei committen
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add docs/fotozeiten-westerhever.ics
+          git commit -m "⚠️ Wetterwarnung aktualisiert" || echo "Keine Änderungen"
+          git push
