@@ -4,19 +4,21 @@ import pytz
 import requests
 from datetime import datetime, timedelta
 from astral import LocationInfo
-from astral.sun import sun, dawn, dusk, golden_hour
+from astral.sun import sun, dawn, dusk
 from astral.location import Observer
 from icalendar import Calendar, Event
 from dotenv import load_dotenv
-from tide_cache import get_tides  # Neuer Import für Caching
+from tide_cache import get_tides  # Caching
 
 # .env laden
 load_dotenv()
 
-# Standort Westerhever
+# Standort Süderoogsand (genauer für Tidewerte)
 tz = pytz.timezone("Europe/Berlin")
-location = LocationInfo(name="Westerhever", region="Germany", timezone=tz.zone,
-                        latitude=54.3726, longitude=8.6489)
+location = LocationInfo(
+    name="Süderoogsand", region="Germany", timezone=tz.zone,
+    latitude=54.2175, longitude=8.5767
+)
 observer = Observer(latitude=location.latitude, longitude=location.longitude)
 
 # Zeitrahmen
@@ -25,7 +27,7 @@ end_date = start_date + timedelta(days=13)
 
 # Kalender vorbereiten
 cal = Calendar()
-cal.add("prodid", "-//Fotozeiten Westerhever//")
+cal.add("prodid", "-//Westerhever Fotozeiten//")  # Hier Name "Westerhever"
 cal.add("version", "2.0")
 
 # Gezeiten organisieren
@@ -77,37 +79,44 @@ def generate_calendar():
             s = sun(observer, date=current_date, tzinfo=tz)
             dawn_start = dawn(observer, date=current_date, tzinfo=tz)
             dusk_end = dusk(observer, date=current_date, tzinfo=tz)
-            gh_morning = golden_hour(observer, date=current_date, tzinfo=tz, direction=1)   # morgens
-            gh_evening = golden_hour(observer, date=current_date, tzinfo=tz, direction=-1)  # abends
 
-            # Gezeiten für den Tag
+            # Blaue Stunde (nautische Dämmerung)
+            bs_morning_start = dawn_start
+            bs_morning_end = s["sunrise"]
+            bs_evening_start = s["sunset"]
+            bs_evening_end = dusk_end
+
+            # Goldene Stunde (1 Stunde nach Sonnenaufgang, 1 Stunde vor Sonnenuntergang)
+            gs_morning_start = s["sunrise"]
+            gs_morning_end = gs_morning_start + timedelta(hours=1)
+            gs_evening_start = s["sunset"] - timedelta(hours=1)
+            gs_evening_end = s["sunset"]
+
+            # Gezeiten für den Tag: Ebbe = Low, Flut = High
             tides = tide_by_date.get(current_date, [])
-            tide_events = [
-                (t[1], f"{'🔺' if t[0] == 'High' else '🔻'} {t[1].strftime('%H:%M')} Uhr")
-                for t in tides
-            ]
+            unique_tides = {}
+            for tide_type, tide_dt in tides:
+                time_str = tide_dt.strftime("%H:%M")
+                # Überschreibe falls doppelt, so bleiben nur eindeutige Zeiten
+                label = "Flut" if tide_type == "High" else "Ebbe"
+                unique_tides[time_str] = label
 
-            # Sonnen- und Dämmerungszeiten als Events mit Zeitstempel
-            time_events = [
-                (s['sunrise'], "🌅 SA"),
-                (s['sunset'], "🌇 SU"),
-                (dawn_start, "🔵 BS morgens Start"),
-                (s['sunset'], "🔵 BS abends Start"),
-                # Goldene Stunde jeweils nur mit Startzeit, die nach BS beginnt:
-                (gh_morning[0], "✨ GS morgens Start"),
-                (gh_evening[0], "✨ GS abends Start"),
-            ]
+            tide_lines = [f"{zeit} Uhr - {label}" for zeit, label in sorted(unique_tides.items())]
 
-            # Alle Events zusammenfassen und nach Zeit sortieren
-            all_events = tide_events + time_events
-            all_events.sort(key=lambda x: x[0])
+            # Tagesbeschreibung mit Abkürzungen
+            beschreibung = "\n".join([
+                f"🌅 SA: {s['sunrise'].strftime('%H:%M')}",
+                f"🌇 SU: {s['sunset'].strftime('%H:%M')}",
+                f"🔵 BS morgens: {bs_morning_start.strftime('%H:%M')} – {bs_morning_end.strftime('%H:%M')}",
+                f"🔵 BS abends: {bs_evening_start.strftime('%H:%M')} – {bs_evening_end.strftime('%H:%M')}",
+                f"✨ GS morgens: {gs_morning_start.strftime('%H:%M')} – {gs_morning_end.strftime('%H:%M')}",
+                f"✨ GS abends: {gs_evening_start.strftime('%H:%M')} – {gs_evening_end.strftime('%H:%M')}",
+                "",
+                "🌊 Gezeiten:",
+                *tide_lines
+            ])
 
-            # Beschreibung aus den sortierten Events zusammenbauen
-            beschreibung = "\n".join(
-                f"{label}: {dt.strftime('%H:%M')}" for dt, label in all_events
-            )
-
-            # Ein Kalendereintrag als Tagesüberblick
+            # Tagesüberblick als ein Eintrag
             event = Event()
             event.add("summary", "📋 Tagesüberblick")
             event.add("dtstart", tz.localize(datetime.combine(current_date, datetime.min.time())))
@@ -120,7 +129,7 @@ def generate_calendar():
             print(f"⚠️ Fehler bei {current_date}: {e}")
         current_date += timedelta(days=1)
 
-    # Wetterwarnung optional als separater Eintrag
+    # Wetterwarnung separat (optional)
     owm_api_key = os.getenv("OPENWEATHERMAP_API_KEY")
     if owm_api_key:
         alerts = get_weather_alerts(location.latitude, location.longitude, owm_api_key)
@@ -143,6 +152,5 @@ def generate_calendar():
     print("📅 Kalender erstellt: docs/fotozeiten-westerhever.ics")
     print(f"✅ Gesamtzahl der Kalendereinträge: {len(cal.subcomponents)}")
 
-# Ausführen
 if __name__ == "__main__":
     generate_calendar()
