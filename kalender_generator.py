@@ -8,15 +8,15 @@ from astral.sun import sun, golden_hour, dawn, dusk
 from astral.location import Observer
 from icalendar import Calendar, Event
 from dotenv import load_dotenv
-from tide_cache import get_tides  # Caching-Funktion
+from tide_cache import get_tides  # Neuer Import für Caching
 
 # .env laden
 load_dotenv()
 
-# Standort Süderoogsand (genauer für Gezeiten)
+# Standort Pellworm für genauere Gezeiten
 tz = pytz.timezone("Europe/Berlin")
-location = LocationInfo(name="Süderoogsand", region="Germany", timezone=tz.zone,
-                        latitude=54.3000, longitude=8.5167)
+location = LocationInfo(name="Westerhever (Pegel: Pellworm)", region="Germany", timezone=tz.zone,
+                        latitude=54.522, longitude=8.655)
 observer = Observer(latitude=location.latitude, longitude=location.longitude)
 
 # Zeitrahmen
@@ -25,7 +25,7 @@ end_date = start_date + timedelta(days=13)
 
 # Kalender vorbereiten
 cal = Calendar()
-cal.add("prodid", "-//Fotozeiten Süderoogsand//")
+cal.add("prodid", "-//Fotozeiten Westerhever//")
 cal.add("version", "2.0")
 
 # Gezeiten organisieren
@@ -39,7 +39,7 @@ def build_tide_lookup(tides_raw):
         tide_by_date[date].append((tide["type"], dt))
     return tide_by_date
 
-# Wetterwarnungen abrufen
+# Wetterwarnungen (OpenWeatherMap One Call 3.0)
 def get_weather_alerts(lat, lon, api_key):
     url = "https://api.openweathermap.org/data/3.0/onecall"
     params = {
@@ -75,46 +75,42 @@ def generate_calendar():
     while current_date <= end_date:
         try:
             s = sun(observer, date=current_date, tzinfo=tz)
+            gh = golden_hour(observer, date=current_date, tzinfo=tz)
             dawn_start = dawn(observer, date=current_date, tzinfo=tz)
             dusk_end = dusk(observer, date=current_date, tzinfo=tz)
 
-            # Goldene Stunde Startzeiten
-            gs_morning = s["sunrise"]
-            gs_evening = s["sunset"] - timedelta(hours=1)
-
-            # Blaue Stunde Startzeiten
-            bs_morning = dawn_start
-            bs_evening = s["sunset"]
-
-            # Gezeiten gruppieren
+            # Gezeiten für den Tag
             tides = tide_by_date.get(current_date, [])
-            ebbe = [t[1].strftime('%H:%M') for t in tides if t[0] == 'Low']
-            flut = [t[1].strftime('%H:%M') for t in tides if t[0] == 'High']
+            tide_lines = [
+                f"{'Ebbe' if t[0] == 'Low' else 'Flut'} {t[1].strftime('%H:%M')}"
+                for t in tides
+            ]
+            tide_str = " / ".join(tide_lines)
 
-            # Beschreibung kompakt zusammenbauen
-            beschreibung = "\n".join(filter(None, [
-                f"🌅 SA: {s['sunrise'].strftime('%H:%M')}",
-                f"🌇 SU: {s['sunset'].strftime('%H:%M')}",
-                f"🔵 BS: {bs_morning.strftime('%H:%M')} / {bs_evening.strftime('%H:%M')}",
-                f"✨ GS: {gs_morning.strftime('%H:%M')} / {gs_evening.strftime('%H:%M')}",
-                f"🌊 Ebbe: {' / '.join(ebbe)}" if ebbe else "",
-                f"🌊 Flut: {' / '.join(flut)}" if flut else ""
-            ]))
+            # Beschreibung zusammensetzen (abgekürzt, mit kombinierten BS und GS Zeiten)
+            beschreibung = "\n".join([
+                f"🌅 SA: {s['sunrise'].strftime('%H:%M')} / SU: {s['sunset'].strftime('%H:%M')}",
+                f"🔵 BS: {dawn_start.strftime('%H:%M')} / {dusk_end.strftime('%H:%M')}",
+                f"✨ GS: {gh[1].strftime('%H:%M')} / {gh[0].strftime('%H:%M')}",
+                tide_str
+            ])
 
-            # Ganztägiges Kalenderevent
+            # Ein Kalendereintrag als ganztägiger Tagesüberblick
             event = Event()
-            event.add("summary", "📍 Westerhever-Zeiten")
-            event.add("dtstart", current_date)
-            event.add("dtend", current_date + timedelta(days=1))
+            event.add("summary", "📋 Westerhever-Zeiten")
+            event.add("dtstart", tz.localize(datetime.combine(current_date, datetime.min.time())).date())
+            event.add("dtend", (tz.localize(datetime.combine(current_date, datetime.min.time())).date() + timedelta(days=1)))
             event.add("dtstamp", datetime.now(pytz.utc))
             event.add("description", beschreibung)
+            event.add("TRANSP", "TRANSPARENT")
+            event.add("X-MICROSOFT-CDO-ALLDAYEVENT", "TRUE")
             cal.add_component(event)
 
         except Exception as e:
             print(f"⚠️ Fehler bei {current_date}: {e}")
         current_date += timedelta(days=1)
 
-    # Wetterwarnung separat
+    # Wetterwarnung optional als separater Eintrag
     owm_api_key = os.getenv("OPENWEATHERMAP_API_KEY")
     if owm_api_key:
         alerts = get_weather_alerts(location.latitude, location.longitude, owm_api_key)
@@ -129,7 +125,7 @@ def generate_calendar():
             event.add("description", beschreibung)
             cal.add_component(event)
 
-    # Datei speichern
+    # Kalender speichern
     os.makedirs("docs", exist_ok=True)
     with open("docs/fotozeiten-westerhever.ics", "wb") as f:
         f.write(cal.to_ical())
