@@ -15,7 +15,7 @@ load_dotenv()
 lat, lon = 57.4417, 9.7543
 location_name = "Rubjerg Knude"
 tz = pytz.timezone("Europe/Copenhagen")
-ics_path = "docs/wetterereignisse-dk.ics"
+ics_path = "wetterereignisse-dk.ics"
 
 # Astral Standort für Sonnenaufgang
 location = LocationInfo(name=location_name, region="Denmark", timezone=tz.zone,
