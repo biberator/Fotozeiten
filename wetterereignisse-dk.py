@@ -11,25 +11,25 @@ from astral.sun import sun
 # .env laden
 load_dotenv()
 
-# Pfad zur Kalenderdatei
-ics_path = "docs/warnungen-dk.ics"
-
-# Zeitzone
+# Standort Rubjerg Knude, Dänemark
+lat, lon = 57.4417, 9.7543
+location_name = "Rubjerg Knude"
 tz = pytz.timezone("Europe/Copenhagen")
+ics_path = "docs/wetterereignisse-dk.ics"
 
-# API-Key laden
+# Astral Standort für Sonnenaufgang
+location = LocationInfo(name=location_name, region="Denmark", timezone=tz.zone,
+                        latitude=lat, longitude=lon)
+
+# OpenWeatherMap API-Key aus Umgebungsvariablen
 API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
-
-# Koordinaten der beiden Orte
-REBILD = {"name": "Rebild Baker", "lat": 56.7930, "lon": 9.8431}
-RUBJERG = {"name": "Rubjerg Knude", "lat": 57.4417, "lon": 9.7543}
 
 # Wetterwarnungen abrufen
 def get_weather_alerts():
     url = "https://api.openweathermap.org/data/3.0/onecall"
     params = {
-        "lat": RUBJERG["lat"],
-        "lon": RUBJERG["lon"],
+        "lat": lat,
+        "lon": lon,
         "appid": API_KEY,
         "units": "metric",
         "exclude": "current,minutely,hourly,daily"
@@ -47,12 +47,12 @@ def get_weather_alerts():
         print(f"⚠️ Fehler bei Wetterwarnung: {e}")
         return []
 
-# Regenserie (nur Rebild)
+# Regenanalyse: 3+ Tage in Folge mit mind. 2 Regen-Zeitblöcken pro Tag
 def detect_rain_series():
     url = "https://api.openweathermap.org/data/2.5/forecast"
     params = {
-        "lat": REBILD["lat"],
-        "lon": REBILD["lon"],
+        "lat": lat,
+        "lon": lon,
         "appid": API_KEY,
         "units": "metric"
     }
@@ -62,12 +62,17 @@ def detect_rain_series():
         data = response.json()
 
         rain_counts = {}
+        wind_speed_by_day = {}
+
         for entry in data["list"]:
             dt = datetime.utcfromtimestamp(entry["dt"]).astimezone(tz)
             day = dt.date()
             rain = entry.get("rain", {}).get("3h", 0)
+            wind = entry.get("wind", {}).get("speed", 0)
+
             if rain > 0:
                 rain_counts[day] = rain_counts.get(day, 0) + 1
+            wind_speed_by_day.setdefault(day, []).append((dt, wind))
 
         # Regenserie erkennen
         valid_days = sorted([d for d, count in rain_counts.items() if count >= 2])
@@ -80,51 +85,31 @@ def detect_rain_series():
                     break
                 streak = [day]
 
+        rain_event = None
         if len(streak) >= 3:
-            return ("🌧️ Regenserie in Rebild Baker", streak[0])
-        return None
-    except Exception as e:
-        print(f"⚠️ Fehler bei Regenanalyse: {e}")
-        return None
+            rain_event = (f"🌧️ {len(streak)} Tage Regen ab {streak[0].strftime('%d.%m.')}", streak[0])
 
-# Ruhiger Morgen nach Sturm (nur Rubjerg)
-def detect_calm_after_storm():
-    url = "https://api.openweathermap.org/data/2.5/forecast"
-    params = {
-        "lat": RUBJERG["lat"],
-        "lon": RUBJERG["lon"],
-        "appid": API_KEY,
-        "units": "metric"
-    }
-    try:
-        response = requests.get(url, params=params)
-        response.raise_for_status()
-        data = response.json()
-
-        wind_by_day = {}
-        for entry in data["list"]:
-            dt = datetime.utcfromtimestamp(entry["dt"]).astimezone(tz)
-            day = dt.date()
-            wind = entry.get("wind", {}).get("speed", 0)
-            wind_by_day.setdefault(day, []).append((dt, wind))
-
-        for day in sorted(wind_by_day.keys()):
-            speeds = [w for _, w in wind_by_day[day]]
+        # Sturm → ruhiger Morgen erkennen (bezogen auf Sonnenaufgang)
+        calm_event = None
+        for day in sorted(wind_speed_by_day.keys()):
+            speeds = [w for _, w in wind_speed_by_day[day]]
             avg = sum(speeds) / len(speeds)
             if avg > 10:
                 next_day = day + timedelta(days=1)
-                if next_day in wind_by_day:
-                    location = LocationInfo(RUBJERG["name"], "Denmark", tz.zone,
-                                            RUBJERG["lat"], RUBJERG["lon"])
+                if next_day in wind_speed_by_day:
                     sunrise = sun(location.observer, date=next_day, tzinfo=tz)["sunrise"]
-                    winds = wind_by_day[next_day]
+                    # Finde den Windwert, der dem Sonnenaufgang am nächsten liegt
+                    winds = wind_speed_by_day[next_day]
                     nearest = min(winds, key=lambda tup: abs((tup[0] - sunrise).total_seconds()))
                     if nearest[1] < 5:
-                        return ("🌬️ Nach dem Sturm am Rubjerg Knude", next_day)
-        return None
+                        calm_event = ("🌬️ Ruhiger Morgen nach Sturm", next_day)
+                        break
+
+        return rain_event, calm_event
+
     except Exception as e:
-        print(f"⚠️ Fehler bei Windanalyse: {e}")
-        return None
+        print(f"⚠️ Fehler bei Regen-/Windanalyse: {e}")
+        return None, None
 
 # Kalender aktualisieren
 def update_calendar():
@@ -136,9 +121,7 @@ def update_calendar():
     now = datetime.now(tz)
     cal.subcomponents = [
         c for c in cal.subcomponents
-        if not (isinstance(c, Event) and c.get("uid") in [
-            "wetterwarnung@dk", "regenserie@dk", "calmmorning@dk"
-        ])
+        if not (isinstance(c, Event) and c.get("uid") in ["wetterwarnung@dk", "regenserie@dk", "calmmorning@dk"])
     ]
 
     alerts = get_weather_alerts()
@@ -152,24 +135,23 @@ def update_calendar():
         event.add("uid", "wetterwarnung@dk")
         cal.add_component(event)
 
-    rain_event = detect_rain_series()
-    if rain_event:
-        summary, date = rain_event
+    rain_msg, calm_event = detect_rain_series()
+    if rain_msg:
+        summary, start = rain_msg
         event = Event()
         event.add("summary", summary)
-        event.add("dtstart", date)
-        event.add("dtend", date + timedelta(days=1))
+        event.add("dtstart", start)
+        event.add("dtend", start + timedelta(days=1))
         event.add("dtstamp", now)
         event.add("uid", "regenserie@dk")
         cal.add_component(event)
 
-    calm_event = detect_calm_after_storm()
     if calm_event:
-        summary, date = calm_event
+        summary, when = calm_event
         event = Event()
         event.add("summary", summary)
-        event.add("dtstart", date)
-        event.add("dtend", date + timedelta(hours=1))
+        event.add("dtstart", when)
+        event.add("dtend", when + timedelta(hours=1))
         event.add("dtstamp", now)
         event.add("uid", "calmmorning@dk")
         cal.add_component(event)
@@ -177,8 +159,8 @@ def update_calendar():
     os.makedirs(os.path.dirname(ics_path), exist_ok=True)
     with open(ics_path, "wb") as f:
         f.write(cal.to_ical())
-    print("✅ Kalender aktualisiert:", ics_path)
 
-# Ausführen
+    print("✅ Kalender aktualisiert: wetterereignisse-dk.ics")
+
 if __name__ == "__main__":
     update_calendar()
