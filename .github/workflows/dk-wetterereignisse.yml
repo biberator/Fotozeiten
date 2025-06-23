@@ -1,35 +1,39 @@
-name: Wetterwarnungen aktualisieren
+name: Wetterereignisse DK automatisch
 
 on:
   schedule:
-    - cron: '0 7 * * *'  # Jeden Tag um 07:00 Uhr UTC (08:00 MEZ)
-  workflow_dispatch:     # Manuell auslösbar
+    - cron: '0 6 * * *'  # Täglich um 06:00 UTC (08:00 MESZ)
+  workflow_dispatch:      # Manuell auslösbar
+
+permissions:
+  contents: write
 
 jobs:
-  update-warnings:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Repository klonen
+      - name: 📥 Repository klonen
         uses: actions/checkout@v3
 
-      - name: Python installieren
+      - name: 🐍 Python installieren
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - name: Abhängigkeiten installieren
-        run: pip install requests icalendar python-dotenv pytz astral
+      - name: 📦 Abhängigkeiten installieren
+        run: |
+          pip install requests icalendar python-dotenv pytz astral
 
-      - name: Wetterwarnungen Skript ausführen
-        run: python wetterwarnung.py
+      - name: 🧮 Wetterereignisse generieren
+        run: python wetterereignisse-dk.py
         env:
           OPENWEATHERMAP_API_KEY: ${{ secrets.OPENWEATHERMAP_API_KEY }}
 
-      - name: Änderungen committen und pushen
+      - name: 🚀 Änderungen committen und pushen
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add docs/warnungen-dk.ics
-          git commit -m "🔄 Automatisch aktualisierte Wetterwarnungen" || echo "Keine Änderungen zum committen"
+          git add doc/wettereignisse-dk.ics
+          git commit -m "🔄 Automatisch aktualisierte Wetterereignisse DK" || echo "Keine Änderungen"
           git push
