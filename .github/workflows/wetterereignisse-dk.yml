@@ -2,7 +2,7 @@ name: Wetterereignisse-DK
 
 on:
   schedule:
-    - cron: '0 4 * * *'  # Täglich um 4:00 UTC = 6:00 MEZ
+    - cron: '0 4 * * *'  # Täglich um 04:00 UTC (06:00 MEZ)
   workflow_dispatch:
 
 permissions:
@@ -25,7 +25,7 @@ jobs:
         run: |
           pip install requests pytz icalendar python-dotenv astral
 
-      - name: 🌦️ Wetterereignisse für DK generieren
+      - name: 🌦️ Wetterereignisse generieren
         run: python wetterereignisse-dk.py
         env:
           OPENWEATHERMAP_API_KEY: ${{ secrets.OPENWEATHERMAP_API_KEY }}
@@ -34,6 +34,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add docs/warnungen-dk.ics
+          git add docs/wetterereignisse-dk.ics
           git commit -m "🔄 Automatisch aktualisierte Wetterereignisse-DK" || echo "Keine Änderungen"
           git push
