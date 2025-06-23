@@ -12,7 +12,7 @@ from astral.sun import sun
 load_dotenv()
 
 # Pfad zum Kalender
-ics_path = "doc/wettereignisse-dk.ics"
+ics_path = "wettereignisse-dk.ics"
 
 # Zeitzone
 tz = pytz.timezone("Europe/Copenhagen")
