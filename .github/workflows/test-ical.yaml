@@ -28,7 +28,7 @@ jobs:
       run: python test_ical.py
 
     - name: Upload ICS artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ics-files
         path: docs/test.ics
