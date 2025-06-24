@@ -4,7 +4,7 @@ import pytz
 import requests
 from datetime import datetime, timedelta
 from astral import LocationInfo
-from astral.sun import sun, golden_hour, dawn, dusk
+from astral.sun import sun, dawn, dusk, golden_hour
 from astral.location import Observer
 from icalendar import Calendar, Event
 from dotenv import load_dotenv
@@ -75,9 +75,13 @@ def generate_calendar():
     while current_date <= end_date:
         try:
             s = sun(observer, date=current_date, tzinfo=tz)
-            gh = golden_hour(observer, date=current_date, tzinfo=tz)
             dawn_start = dawn(observer, date=current_date, tzinfo=tz)
             dusk_end = dusk(observer, date=current_date, tzinfo=tz)
+
+            # Goldene Stunde berechnen
+            golden_hours = golden_hour(observer, date=current_date, tzinfo=tz)
+            golden_morning_end = s['sunrise'] + timedelta(minutes=60)
+            golden_evening_start = golden_hours['sunset']
 
             # Gezeiten für den Tag
             tides = tide_by_date.get(current_date, [])
@@ -88,11 +92,6 @@ def generate_calendar():
                 tide_lines.append(f"⛱️ Ebbe: {' / '.join(ebb_times)}")
             if flood_times:
                 tide_lines.append(f"🌊 Flut: {' / '.join(flood_times)}")
-
-            # Goldene Stunde: morgens Endzeit (Start + 60 Min), abends Startzeit
-            golden_morning_start = gh[0]
-            golden_morning_end = golden_morning_start + timedelta(minutes=60)
-            golden_evening_start = gh[1]
 
             # Beschreibung zusammensetzen
             beschreibung = "\n".join([
