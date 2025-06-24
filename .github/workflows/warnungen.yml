@@ -16,7 +16,7 @@ jobs:
       - name: Python einrichten
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.11'
 
       - name: Abhängigkeiten installieren
         run: |
@@ -25,6 +25,9 @@ jobs:
 
       - name: Wetterwarnungen generieren
         run: python generate_warnungen.py
+
+      - name: Zeige docs-Inhalte vor Commit
+        run: ls -l docs
 
       - name: Push aktualisierte ICS-Datei
         run: |
