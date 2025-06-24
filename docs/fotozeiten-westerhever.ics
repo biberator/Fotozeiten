@@ -3,9 +3,9 @@ VERSION:2.0
 PRODID:-//Fotozeiten Westerhever//
 BEGIN:VEVENT
 SUMMARY:⚠️ Wetterwarnung
-DTSTART;TZID=Europe/Berlin:20250624T154853
-DTEND;TZID=Europe/Berlin:20250624T164853
-DTSTAMP:20250624T134853Z
+DTSTART;TZID=Europe/Berlin:20250624T155342
+DTEND;TZID=Europe/Berlin:20250624T165342
+DTSTAMP:20250624T135342Z
 DESCRIPTION:gale-force gusts: There is a risk of gale-force gusts (level 2
   of 4).\nMax. gusts: 55-65 km/h\; Wind direction: west\; Increased gusts: 
  near showers and in exposed locations ~ 80 km/h\n\ngale-force gusts: There
