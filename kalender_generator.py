@@ -2,11 +2,12 @@
 import os
 import pytz
 import requests
+import uuid
 from datetime import datetime, timedelta
 from astral import LocationInfo
 from astral.sun import sun, dawn, dusk, golden_hour
 from astral.location import Observer
-from icalendar import Calendar, Event
+from icalendar import Calendar, Event, vDate
 from dotenv import load_dotenv
 from tide_cache import get_tides  # Import für Gezeitendaten mit Caching
 
@@ -78,7 +79,7 @@ def generate_calendar():
             dawn_start = dawn(observer, date=current_date, tzinfo=tz)
             dusk_end = dusk(observer, date=current_date, tzinfo=tz)
 
-            # Goldene Stunde ermitteln (2 Zeitpunkte: morgens und abends)
+            # Goldene Stunde ermitteln (morgens Ende = Sonnenaufgang + 60 Min, abends Start = golden_hour 'sunset')
             gh = golden_hour(observer, date=current_date, tzinfo=tz)
             golden_morning_end = s['sunrise'] + timedelta(minutes=60)  # Ende morgens
             golden_evening_start = gh['sunset']  # Start abends
@@ -92,19 +93,20 @@ def generate_calendar():
             flood_line = f"🌊 Flut: {' / '.join(flood_times)}" if flood_times else ""
 
             # Beschreibungstext zusammensetzen
-            beschreibung = "\n".join([
+            beschreibung = "\n".join(filter(None, [
                 f"🌅 SA: {s['sunrise'].strftime('%H:%M')} / SU: {s['sunset'].strftime('%H:%M')}",
                 f"🔵 BS: {dawn_start.strftime('%H:%M')} / {dusk_end.strftime('%H:%M')}",
                 f"✨ GS: {golden_morning_end.strftime('%H:%M')} / {golden_evening_start.strftime('%H:%M')}",
                 ebb_line,
                 flood_line
-            ])
+            ]))
 
-            # Ganztägiger Kalendereintrag
+            # Ganztägiger Kalendereintrag mit eindeutiger UID für Apple Kalender
             event = Event()
             event.add("summary", "📋 Westerhever-Zeiten")
-            event.add("dtstart", current_date)  # date-Objekt für Ganztages-Event
-            event.add("dtend", current_date + timedelta(days=1))
+            event.add("dtstart", vDate(current_date))  # Nur Datum, keine Zeit
+            event.add("dtend", vDate(current_date + timedelta(days=1)))  # exclusives Ende
+            event.add("uid", f"{current_date.strftime('%Y%m%d')}-westerhever@fotozeiten.de")  # feste UID pro Tag
             event.add("dtstamp", datetime.now(pytz.utc))
             event.add("description", beschreibung)
             event.add("TRANSP", "TRANSPARENT")
