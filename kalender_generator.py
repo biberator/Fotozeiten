@@ -2,7 +2,6 @@
 import os
 import pytz
 import requests
-import uuid
 from datetime import datetime, timedelta
 from astral import LocationInfo
 from astral.sun import sun, dawn, dusk, golden_hour
@@ -23,11 +22,6 @@ observer = Observer(latitude=location.latitude, longitude=location.longitude)
 # Zeitrahmen für Kalender (heute + 13 Tage)
 start_date = datetime.now(tz).date()
 end_date = start_date + timedelta(days=13)
-
-# Kalender vorbereiten
-cal = Calendar()
-cal.add("prodid", "-//Fotozeiten Westerhever//")
-cal.add("version", "2.0")
 
 def build_tide_lookup(tides_raw):
     """Organisiert rohe Gezeitendaten in ein dict mit Datum als Key"""
@@ -67,6 +61,10 @@ def get_weather_alerts(lat, lon, api_key):
         return []
 
 def generate_calendar():
+    cal = Calendar()
+    cal.add("prodid", "-//Fotozeiten Westerhever//")
+    cal.add("version", "2.0")
+
     tide_data = get_tides()
     tides_raw = tide_data.get("extremes", [])
     print(f"🌊 Gezeitendaten (aus Cache oder API): {len(tides_raw)} Einträge erhalten.")
@@ -79,12 +77,10 @@ def generate_calendar():
             dawn_start = dawn(observer, date=current_date, tzinfo=tz)
             dusk_end = dusk(observer, date=current_date, tzinfo=tz)
 
-            # Goldene Stunde ermitteln (morgens Ende = Sonnenaufgang + 60 Min, abends Start = golden_hour 'sunset')
             gh = golden_hour(observer, date=current_date, tzinfo=tz)
-            golden_morning_end = s['sunrise'] + timedelta(minutes=60)  # Ende morgens
-            golden_evening_start = gh['sunset']  # Start abends
+            golden_morning_end = s['sunrise'] + timedelta(minutes=60)
+            golden_evening_start = gh['sunset']
 
-            # Gezeiten für den Tag
             tides = tide_by_date.get(current_date, [])
             ebb_times = [t[1].strftime('%H:%M') for t in tides if t[0] == 'Low']
             flood_times = [t[1].strftime('%H:%M') for t in tides if t[0] == 'High']
@@ -92,7 +88,6 @@ def generate_calendar():
             ebb_line = f"⛱️ Ebbe: {' / '.join(ebb_times)}" if ebb_times else ""
             flood_line = f"🌊 Flut: {' / '.join(flood_times)}" if flood_times else ""
 
-            # Beschreibungstext zusammensetzen
             beschreibung = "\n".join(filter(None, [
                 f"🌅 SA: {s['sunrise'].strftime('%H:%M')} / SU: {s['sunset'].strftime('%H:%M')}",
                 f"🔵 BS: {dawn_start.strftime('%H:%M')} / {dusk_end.strftime('%H:%M')}",
@@ -101,17 +96,18 @@ def generate_calendar():
                 flood_line
             ]))
 
-            # Ganztägiger Kalendereintrag mit eindeutiger UID für Apple Kalender
             event = Event()
             event.add("summary", "📋 Westerhever-Zeiten")
-            event.add("dtstart", vDate(current_date))  # Nur Datum, keine Zeit
-            event.add("dtend", vDate(current_date + timedelta(days=1)))  # exclusives Ende
-            event.add("uid", f"{current_date.strftime('%Y%m%d')}-westerhever@fotozeiten.de")  # feste UID pro Tag
+            event.add("dtstart", vDate(current_date))
+            event.add("dtend", vDate(current_date + timedelta(days=1)))
+            event.add("uid", f"{current_date.strftime('%Y%m%d')}-westerhever@fotozeiten.de")
             event.add("dtstamp", datetime.now(pytz.utc))
             event.add("description", beschreibung)
             event.add("TRANSP", "TRANSPARENT")
             event.add("X-MICROSOFT-CDO-ALLDAYEVENT", "TRUE")
             cal.add_component(event)
+
+            print(f"✔️ Tages-Event für {current_date} hinzugefügt.")
 
         except Exception as e:
             print(f"⚠️ Fehler bei {current_date}: {e}")
@@ -132,7 +128,6 @@ def generate_calendar():
             event.add("description", beschreibung)
             cal.add_component(event)
 
-    # Kalender speichern
     os.makedirs("docs", exist_ok=True)
     kalender_pfad = "docs/fotozeiten-westerhever.ics"
     with open(kalender_pfad, "wb") as f:
