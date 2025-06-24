@@ -81,25 +81,27 @@ def generate_calendar():
 
             # Gezeiten für den Tag
             tides = tide_by_date.get(current_date, [])
-            tide_lines = [
-                f"{'Ebbe' if t[0] == 'Low' else 'Flut'} {t[1].strftime('%H:%M')}"
-                for t in tides
-            ]
-            tide_str = " / ".join(tide_lines)
 
-            # Beschreibung zusammensetzen (abgekürzt, mit kombinierten BS und GS Zeiten)
+            ebb_times = [t[1].strftime('%H:%M') for t in tides if t[0] == "Low"]
+            flood_times = [t[1].strftime('%H:%M') for t in tides if t[0] == "High"]
+
+            ebb_str = " / ".join(ebb_times) if ebb_times else "-"
+            flood_str = " / ".join(flood_times) if flood_times else "-"
+
+            # Beschreibung zusammensetzen
             beschreibung = "\n".join([
                 f"🌅 SA: {s['sunrise'].strftime('%H:%M')} / SU: {s['sunset'].strftime('%H:%M')}",
                 f"🔵 BS: {dawn_start.strftime('%H:%M')} / {dusk_end.strftime('%H:%M')}",
                 f"✨ GS: {gh[1].strftime('%H:%M')} / {gh[0].strftime('%H:%M')}",
-                tide_str
+                f"Ebbe {ebb_str}",
+                f"Flut {flood_str}"
             ])
 
             # Ein Kalendereintrag als ganztägiger Tagesüberblick
             event = Event()
             event.add("summary", "📋 Westerhever-Zeiten")
-            event.add("dtstart", tz.localize(datetime.combine(current_date, datetime.min.time())).date())
-            event.add("dtend", (tz.localize(datetime.combine(current_date, datetime.min.time())).date() + timedelta(days=1)))
+            event.add("dtstart", current_date)
+            event.add("dtend", current_date + timedelta(days=1))
             event.add("dtstamp", datetime.now(pytz.utc))
             event.add("description", beschreibung)
             event.add("TRANSP", "TRANSPARENT")
