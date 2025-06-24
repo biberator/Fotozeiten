@@ -79,9 +79,9 @@ def generate_calendar():
             dusk_end = dusk(observer, date=current_date, tzinfo=tz)
 
             # Goldene Stunde berechnen
-            golden_hours = golden_hour(observer, date=current_date, tzinfo=tz)
+            gh = golden_hour(observer, date=current_date, tzinfo=tz)
             golden_morning_end = s['sunrise'] + timedelta(minutes=60)
-            golden_evening_start = golden_hours['sunset']
+            golden_evening_start = gh['sunset']  # Astral liefert den korrekten Startpunkt der goldenen Stunde abends
 
             # Gezeiten für den Tag
             tides = tide_by_date.get(current_date, [])
