@@ -75,34 +75,38 @@ def generate_calendar():
     while current_date <= end_date:
         try:
             s = sun(observer, date=current_date, tzinfo=tz)
-            gh_morning_start, gh_evening_start = golden_hour(observer, date=current_date, tzinfo=tz)
-            gh_morning_end = gh_morning_start + timedelta(minutes=60)  # Goldene Stunde morgens Endzeit
-
+            gh = golden_hour(observer, date=current_date, tzinfo=tz)
             dawn_start = dawn(observer, date=current_date, tzinfo=tz)
             dusk_end = dusk(observer, date=current_date, tzinfo=tz)
 
+            # Gezeiten für den Tag
             tides = tide_by_date.get(current_date, [])
-            tides_sorted = sorted(tides, key=lambda x: x[1])
+            ebb_times = [t[1].strftime('%H:%M') for t in tides if t[0] == 'Low']
+            flood_times = [t[1].strftime('%H:%M') for t in tides if t[0] == 'High']
+            tide_lines = []
+            if ebb_times:
+                tide_lines.append(f"⛱️ Ebbe: {' / '.join(ebb_times)}")
+            if flood_times:
+                tide_lines.append(f"🌊 Flut: {' / '.join(flood_times)}")
 
-            ebb_times = [t[1].strftime("%H:%M") for t in tides_sorted if t[0] == "Low"]
-            flood_times = [t[1].strftime("%H:%M") for t in tides_sorted if t[0] == "High"]
+            # Goldene Stunde: morgens Endzeit (Start + 60 Min), abends Startzeit
+            golden_morning_start = gh[0]
+            golden_morning_end = golden_morning_start + timedelta(minutes=60)
+            golden_evening_start = gh[1]
 
-            ebb_str = " / ".join(ebb_times) if ebb_times else "-"
-            flood_str = " / ".join(flood_times) if flood_times else "-"
-
+            # Beschreibung zusammensetzen
             beschreibung = "\n".join([
                 f"🌅 SA: {s['sunrise'].strftime('%H:%M')} / SU: {s['sunset'].strftime('%H:%M')}",
                 f"🔵 BS: {dawn_start.strftime('%H:%M')} / {dusk_end.strftime('%H:%M')}",
-                f"✨ GS: {gh_morning_end.strftime('%H:%M')} / {gh_evening_start.strftime('%H:%M')}",
-                f"🏖️ Ebbe: {ebb_str}",
-                f"🌊 Flut: {flood_str}"
+                f"✨ GS: {golden_morning_end.strftime('%H:%M')} / {golden_evening_start.strftime('%H:%M')}",
+                *tide_lines
             ])
 
-            # Ganztägiger Kalendereintrag Tagesüberblick
+            # Ein Kalendereintrag als ganztägiger Tagesüberblick
             event = Event()
             event.add("summary", "📋 Westerhever-Zeiten")
-            event.add("dtstart", tz.localize(datetime.combine(current_date, datetime.min.time())))
-            event.add("dtend", tz.localize(datetime.combine(current_date + timedelta(days=1), datetime.min.time())))
+            event.add("dtstart", tz.localize(datetime.combine(current_date, datetime.min.time())).date())
+            event.add("dtend", (tz.localize(datetime.combine(current_date, datetime.min.time())).date() + timedelta(days=1)))
             event.add("dtstamp", datetime.now(pytz.utc))
             event.add("description", beschreibung)
             event.add("TRANSP", "TRANSPARENT")
