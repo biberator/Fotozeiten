@@ -23,12 +23,15 @@ jobs:
 
       - name: 🔧 Abhängigkeiten installieren
         run: |
-          pip install requests pytz icalendar python-dotenv astral
+          pip install --no-cache-dir requests pytz icalendar python-dotenv astral
 
       - name: 🌦️ Wetterereignisse generieren
         run: python wetterereignisse-dk.py
         env:
           OPENWEATHERMAP_API_KEY: ${{ secrets.OPENWEATHERMAP_API_KEY }}
+
+      - name: 📂 Inhalt von docs anzeigen
+        run: ls -l docs
 
       - name: 🚀 Änderungen committen und pushen
         run: |
