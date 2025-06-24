@@ -75,24 +75,28 @@ def generate_calendar():
     while current_date <= end_date:
         try:
             s = sun(observer, date=current_date, tzinfo=tz)
-            gh = golden_hour(observer, date=current_date, tzinfo=tz)
+            gh_morning, gh_evening = golden_hour(observer, date=current_date, tzinfo=tz)
             dawn_start = dawn(observer, date=current_date, tzinfo=tz)
             dusk_end = dusk(observer, date=current_date, tzinfo=tz)
 
-            # Gezeiten für den Tag
+            # Gezeiten für den Tag sortieren nach Zeit
             tides = tide_by_date.get(current_date, [])
-            tide_lines = [
-                f"{'🏖️ Ebbe' if t[0] == 'Low' else '🌊 Flut'} {t[1].strftime('%H:%M')}"
-                for t in tides
-            ]
-            tide_str = " / ".join(tide_lines)
+            tides_sorted = sorted(tides, key=lambda x: x[1])
 
-            # Beschreibung zusammensetzen (abgekürzt, mit kombinierten BS und GS Zeiten)
+            # Ebbe- und Flutzeiten sammeln
+            ebb_times = [t[1].strftime("%H:%M") for t in tides_sorted if t[0] == "Low"]
+            flood_times = [t[1].strftime("%H:%M") for t in tides_sorted if t[0] == "High"]
+
+            ebb_str = " / ".join(ebb_times) if ebb_times else "-"
+            flood_str = " / ".join(flood_times) if flood_times else "-"
+
+            # Beschreibung zusammensetzen
             beschreibung = "\n".join([
                 f"🌅 SA: {s['sunrise'].strftime('%H:%M')} / SU: {s['sunset'].strftime('%H:%M')}",
                 f"🔵 BS: {dawn_start.strftime('%H:%M')} / {dusk_end.strftime('%H:%M')}",
-                f"✨ GS: {gh[1].strftime('%H:%M')} / {gh[0].strftime('%H:%M')}",
-                tide_str
+                f"✨ GS: {gh_morning.strftime('%H:%M')} / {gh_evening.strftime('%H:%M')}",  # Morgen-Ende / Abend-Start
+                f"🏖️ Ebbe: {ebb_str}",
+                f"🌊 Flut: {flood_str}"
             ])
 
             # Ein Kalendereintrag als ganztägiger Tagesüberblick
