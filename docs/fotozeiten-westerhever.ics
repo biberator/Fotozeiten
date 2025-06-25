@@ -3,9 +3,9 @@ VERSION:2.0
 PRODID:-//Fotozeiten Westerhever//
 BEGIN:VEVENT
 SUMMARY:⚠️ Wetterwarnung
-DTSTART;TZID=Europe/Berlin:20250625T071537
-DTEND;TZID=Europe/Berlin:20250625T081537
-DTSTAMP:20250625T051537Z
+DTSTART;TZID=Europe/Berlin:20250625T071912
+DTEND;TZID=Europe/Berlin:20250625T081912
+DTSTAMP:20250625T051912Z
 DESCRIPTION:wind gusts: There is a risk of wind gusts (level 1 of 4).\nMax
  . gusts: ~ 55 km/h\; Wind direction: west then north-west
 END:VEVENT
