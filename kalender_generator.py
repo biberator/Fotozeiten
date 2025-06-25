@@ -79,8 +79,11 @@ def generate_calendar():
 
     current_date = start_date
     while current_date <= end_date:
+        print(f"⏳ Generiere Event für {current_date}")
         try:
             s = sun(observer, date=current_date, tzinfo=tz)
+            print(f"☀️ Sonnenzeiten ermittelt für {current_date}")
+
             dawn_start = dawn(observer, date=current_date, tzinfo=tz)
             dusk_end = dusk(observer, date=current_date, tzinfo=tz)
 
@@ -121,7 +124,7 @@ def generate_calendar():
             print(f"✔️ Tages-Event für {current_date} hinzugefügt.")
 
         except Exception as e:
-            print(f"⚠️ Fehler bei {current_date}: {e}")
+            print(f"⚠️ Fehler bei {current_date}: {repr(e)}")
 
         current_date += timedelta(days=1)
 
