@@ -3,10 +3,10 @@ VERSION:2.0
 PRODID:-//Fotozeiten//Wetterwarnung Westerhever//
 BEGIN:VEVENT
 SUMMARY:⚠️ Wetterwarnung Westerhever
-DTSTART;TZID=Europe/Berlin:20250718T072001
-DTEND;TZID=Europe/Berlin:20250718T082001
-DTSTAMP:20250718T052001Z
-UID:wetterwarnung-20250718@fotozeiten
+DTSTART;TZID=Europe/Berlin:20250719T071552
+DTEND;TZID=Europe/Berlin:20250719T081552
+DTSTAMP:20250719T051552Z
+UID:wetterwarnung-20250719@fotozeiten
 DESCRIPTION:fog: There is a risk of fog (level 1 of 1).\nVisibility: < 150
   m
 LOCATION:Westerhever\, Deutschland
