@@ -19,9 +19,9 @@ location = LocationInfo(name="Westerhever (Pegel: Pellworm)", region="Germany", 
                         latitude=54.522, longitude=8.655)
 observer = Observer(latitude=location.latitude, longitude=location.longitude)
 
-# Zeitrahmen für Kalender (heute + 13 Tage)
-start_date = datetime.now(tz).date()
-end_date = start_date + timedelta(days=13)
+# Zeitrahmen für Kalender: rückwirkend 14 Tage + 14 Tage in die Zukunft
+start_date = (datetime.now(tz) - timedelta(days=14)).date()
+end_date = (datetime.now(tz) + timedelta(days=14)).date()
 
 def get_weather_alerts(lat, lon, api_key):
     url = "https://api.openweathermap.org/data/3.0/onecall"
