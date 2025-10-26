@@ -3,16 +3,13 @@ VERSION:2.0
 PRODID:-//Fotozeiten//Wetterwarnung Westerhever//
 BEGIN:VEVENT
 SUMMARY:⚠️ Wetterwarnung Westerhever
-DTSTART;TZID=Europe/Berlin:20251025T071120
-DTEND;TZID=Europe/Berlin:20251025T081120
-DTSTAMP:20251025T051120Z
-UID:wetterwarnung-20251025@fotozeiten
+DTSTART;TZID=Europe/Berlin:20251026T061158
+DTEND;TZID=Europe/Berlin:20251026T071158
+DTSTAMP:20251026T051158Z
+UID:wetterwarnung-20251026@fotozeiten
 DESCRIPTION:gale-force gusts: There is a risk of gale-force gusts (level 2
-  of 4).\nMax. gusts: 70-85 km/h\; Wind direction: south-west\; Increased g
- usts: near showers and in exposed locations < 95 km/h | gale-force gusts: 
- There is a risk of gale-force gusts (level 2 of 4).\nMax. gusts: 65-75 km/
- h\; Wind direction: south-west then west\; Increased gusts: near showers a
- nd in exposed locations ~ 85 km/h
+  of 4).\nMax. gusts: 70-85 km/h\; Wind direction: west\; Increased gusts: 
+ near showers and in exposed locations ~ 95 km/h
 LOCATION:Westerhever\, Deutschland
 END:VEVENT
 END:VCALENDAR
