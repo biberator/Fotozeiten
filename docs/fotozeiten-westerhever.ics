@@ -3,13 +3,13 @@ VERSION:2.0
 PRODID:-//Fotozeiten//Wetterwarnung Westerhever//
 BEGIN:VEVENT
 SUMMARY:⚠️ Wetterwarnung Westerhever
-DTSTART;TZID=Europe/Berlin:20251229T062226
-DTEND;TZID=Europe/Berlin:20251229T072226
-DTSTAMP:20251229T052226Z
-UID:wetterwarnung-20251229@fotozeiten
-DESCRIPTION:wind gusts: There is a risk of wind gusts (level 1 of 4).\nMax
- . gusts: ~ 55 km/h\; Wind direction: north-west then north\; Increased gus
- ts: in exposed locations ~ 65 km/h
+DTSTART;TZID=Europe/Berlin:20251230T061735
+DTEND;TZID=Europe/Berlin:20251230T071735
+DTSTAMP:20251230T051735Z
+UID:wetterwarnung-20251230@fotozeiten
+DESCRIPTION:frost: There is a risk of frost (level 1 of 2).\nMinimum tempe
+ rature: 0 - -4 °C | icy surfaces: There is a risk of icy surfaces (level 
+ 1 of 4).
 LOCATION:Westerhever\, Deutschland
 END:VEVENT
 END:VCALENDAR
