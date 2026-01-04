@@ -3,13 +3,14 @@ VERSION:2.0
 PRODID:-//Fotozeiten//Wetterwarnung Westerhever//
 BEGIN:VEVENT
 SUMMARY:⚠️ Wetterwarnung Westerhever
-DTSTART;TZID=Europe/Berlin:20260103T061425
-DTEND;TZID=Europe/Berlin:20260103T071425
-DTSTAMP:20260103T051425Z
-UID:wetterwarnung-20260103@fotozeiten
-DESCRIPTION:frost: There is a risk of frost (level 1 of 2).\nMinimum tempe
- rature: -4 - -7 °C | icy surfaces: There is a risk of icy surfaces (level
-  1 of 4).
+DTSTART;TZID=Europe/Berlin:20260104T062005
+DTEND;TZID=Europe/Berlin:20260104T072005
+DTSTAMP:20260104T052005Z
+UID:wetterwarnung-20260104@fotozeiten
+DESCRIPTION:icy surfaces: There is a risk of icy surfaces (level 1 of 4). 
+ | frost: There is a risk of frost (level 1 of 2).\nMinimum temperature: -5
+  - -8 °C | light snowfall: There is a risk of light snowfall (level 1 of 
+ 4).\nPrecipitation amounts: 1-5 cm
 LOCATION:Westerhever\, Deutschland
 END:VEVENT
 END:VCALENDAR
