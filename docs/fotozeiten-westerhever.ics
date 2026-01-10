@@ -3,19 +3,18 @@ VERSION:2.0
 PRODID:-//Fotozeiten//Wetterwarnung Westerhever//
 BEGIN:VEVENT
 SUMMARY:⚠️ Wetterwarnung Westerhever
-DTSTART;TZID=Europe/Berlin:20260109T061847
-DTEND;TZID=Europe/Berlin:20260109T071847
-DTSTAMP:20260109T051847Z
-UID:wetterwarnung-20260109@fotozeiten
-DESCRIPTION:heavy snow drifts: There is a risk of heavy snowdrifts (level 
- 3 of 4).\nCause: gusts with loose snow cover | frost: There is a risk of f
- rost (level 1 of 2).\nMinimum temperature: -1 - -4 °C | wind gusts: There
-  is a risk of wind gusts (level 1 of 4).\nMax. gusts: ~ 55 km/h\; Wind dir
- ection: east\; Increased gusts: in exposed locations ~ 65 km/h | gale-forc
- e gusts: There is a risk of gale-force gusts (level 2 of 4).\nMax. gusts: 
- 55-65 km/h\; Wind direction: east\; Increased gusts: in exposed locations 
- ~ 85 km/h | frost: There is a risk of frost (level 1 of 2).\nMinimum tempe
- rature: 0 - -3 °C
+DTSTART;TZID=Europe/Berlin:20260110T061449
+DTEND;TZID=Europe/Berlin:20260110T071449
+DTSTAMP:20260110T051449Z
+UID:wetterwarnung-20260110@fotozeiten
+DESCRIPTION:frost: There is a risk of frost (level 1 of 2).\nMinimum tempe
+ rature: 0 - -5 °C | icy surfaces: There is a risk of icy surfaces (level 
+ 1 of 4). | heavy snow drifts: There is a risk of heavy snowdrifts (level 3
+  of 4).\nCause: gusts with loose snow cover | wind gusts: There is a risk 
+ of wind gusts (level 1 of 4).\nMax. gusts: ~ 55 km/h\; Wind direction: nor
+ th-east\; Increased gusts: in exposed locations ~ 65 km/h | snow drifts: T
+ here is a risk of snowdrifts (level 2 of 4).\nCause: gusts with loose snow
+  cover
 LOCATION:Westerhever\, Deutschland
 END:VEVENT
 END:VCALENDAR
