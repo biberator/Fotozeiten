@@ -6,50 +6,32 @@ from datetime import datetime, timedelta
 from astral import LocationInfo
 from astral.sun import sun, dawn, dusk
 from astral.location import Observer
-from icalendar import Calendar, Event, vDate
+from icalendar import Calendar, Event
 from dotenv import load_dotenv
 from tide_cache import get_tides  # 🌊 Gezeitendaten werden benötigt
 
 # .env laden
 load_dotenv()
 
-# Standort Pellworm für genauere Sonnenstände
+# Standort Westerhever / Pegel Pellworm für genauere Sonnenstände
 tz = pytz.timezone("Europe/Berlin")
-location = LocationInfo(name="Westerhever (Pegel: Pellworm)", region="Germany", timezone=tz.zone,
-                        latitude=54.522, longitude=8.655)
+location = LocationInfo(
+    name="Westerhever (Pegel: Pellworm)",
+    region="Germany",
+    timezone=tz.zone,
+    latitude=54.522,
+    longitude=8.655
+)
 observer = Observer(latitude=location.latitude, longitude=location.longitude)
 
-# Zeitrahmen für Kalender: rückwirkend 14 Tage + 14 Tage in die Zukunft
+# Zeitrahmen für Kalender (wird in __main__ überschrieben für Test)
 start_date = (datetime.now(tz) - timedelta(days=14)).date()
 end_date = (datetime.now(tz) + timedelta(days=14)).date()
 
-def get_weather_alerts(lat, lon, api_key):
-    url = "https://api.openweathermap.org/data/3.0/onecall"
-    params = {
-        "lat": lat,
-        "lon": lon,
-        "appid": api_key,
-        "units": "metric",
-        "exclude": "current,minutely,hourly,daily",
-        "lang": "de"
-    }
-    try:
-        response = requests.get(url, params=params)
-        response.raise_for_status()
-        data = response.json()
-        alerts = data.get("alerts", [])
-        messages = []
-        for alert in alerts:
-            event = alert.get("event", "Warnung")
-            desc = alert.get("description", "")
-            messages.append(f"⚠️ {event}: {desc.strip()}")
-        return messages
-    except Exception as e:
-        print(f"⚠️ Fehler bei Wetterwarnung: {e}")
-        return []
 
+# ---------------------- Wetterwarnungen ----------------------
 def get_extreme_alerts(lat, lon, api_key):
-    """Liefert nur extreme Wetterwarnungen mit Zeitraum zurück"""
+    """Liefert extreme Wetterwarnungen (max. 7 Tage)"""
     url = "https://api.openweathermap.org/data/3.0/onecall"
     params = {
         "lat": lat,
@@ -74,13 +56,11 @@ def get_extreme_alerts(lat, lon, api_key):
         response.raise_for_status()
         data = response.json()
         alerts = data.get("alerts", [])
-
         extreme_alerts = []
 
         for alert in alerts:
             event = alert.get("event", "").lower()
             desc = alert.get("description", "").lower()
-
             matched_keywords = [kw for kw in extreme_keywords if kw in event or kw in desc]
 
             if matched_keywords:
@@ -92,7 +72,6 @@ def get_extreme_alerts(lat, lon, api_key):
                 if start_ts and end_ts:
                     start = datetime.fromtimestamp(start_ts, tz=pytz.utc).astimezone(tz)
                     end = datetime.fromtimestamp(end_ts, tz=pytz.utc).astimezone(tz)
-                    # max. 7 Tage Dauer
                     if (end - start) > timedelta(days=7):
                         end = start + timedelta(days=7)
                 else:
@@ -112,6 +91,8 @@ def get_extreme_alerts(lat, lon, api_key):
         print(f"⚠️ Fehler bei extremen Wetterwarnungen: {e}")
         return []
 
+
+# ---------------------- Gezeiten ----------------------
 def build_tide_lookup(tides_raw):
     tide_by_date = {}
     for tide in tides_raw:
@@ -122,6 +103,8 @@ def build_tide_lookup(tides_raw):
         tide_by_date[date].append((tide["type"], dt))
     return tide_by_date
 
+
+# ---------------------- Kalender generieren ----------------------
 def generate_calendar():
     cal = Calendar()
     cal.add("prodid", "-//Fotozeiten Westerhever//")
@@ -129,7 +112,7 @@ def generate_calendar():
 
     owm_api_key = os.getenv("OPENWEATHERMAP_API_KEY")
 
-    # Tages-Events mit Zeiten, Ebbe/Flut
+    # Gezeiten laden
     try:
         tide_data = get_tides()
         tides_raw = tide_data.get("extremes", [])
@@ -139,6 +122,7 @@ def generate_calendar():
         print(f"⚠️ Fehler beim Laden der Gezeiten: {e}")
         tide_by_date = {}
 
+    # Ganztagstermine für Tagesinfos
     current_date = start_date
     while current_date <= end_date:
         try:
@@ -149,52 +133,60 @@ def generate_calendar():
             golden_morning_end = s["sunrise"] + timedelta(minutes=60)
             golden_evening_start = s["sunset"] - timedelta(minutes=60)
 
-            beschreibungsteile = [
-                f"🌅 SA: {s['sunrise'].strftime('%H:%M')} / SU: {s['sunset'].strftime('%H:%M')}",
-                f"🔵 BS: {dawn_start.strftime('%H:%M')} / {dusk_end.strftime('%H:%M')}",
-                f"✨ GS: {golden_morning_end.strftime('%H:%M')} / {golden_evening_start.strftime('%H:%M')}"
-            ]
-
             tides = tide_by_date.get(current_date, [])
             ebb_times = [t[1].strftime('%H:%M') for t in tides if t[0] == 'Low']
             flood_times = [t[1].strftime('%H:%M') for t in tides if t[0] == 'High']
 
-            if ebb_times:
-                beschreibungsteile.append(f"⛱️ Ebbe: {' / '.join(ebb_times)}")
-            if flood_times:
-                beschreibungsteile.append(f"🌊 Flut: {' / '.join(flood_times)}")
+            # Nur Event erzeugen, wenn mindestens Daten vorhanden
+            if ebb_times or flood_times or s["sunrise"] and s["sunset"]:
+                beschreibungsteile = [
+                    f"🌅 SA: {s['sunrise'].strftime('%H:%M')} / SU: {s['sunset'].strftime('%H:%M')}",
+                    f"🔵 BS: {dawn_start.strftime('%H:%M')} / {dusk_end.strftime('%H:%M')}",
+                    f"✨ GS: {golden_morning_end.strftime('%H:%M')} / {golden_evening_start.strftime('%H:%M')}"
+                ]
+                if ebb_times:
+                    beschreibungsteile.append(f"⛱️ Ebbe: {' / '.join(ebb_times)}")
+                if flood_times:
+                    beschreibungsteile.append(f"🌊 Flut: {' / '.join(flood_times)}")
 
-            event = Event()
-            event.add("summary", "📋 Westerhever-Zeiten")
-            event.add("dtstart", vDate(current_date))
-            event.add("dtend", vDate(current_date + timedelta(days=1)))
-            event.add("uid", f"{current_date.strftime('%Y%m%d')}-westerhever@fotozeiten.de")
-            event.add("dtstamp", datetime.now(pytz.utc))
-            event.add("description", "\n".join(beschreibungsteile))
-            event.add("TRANSP", "TRANSPARENT")
-            event.add("X-MICROSOFT-CDO-ALLDAYEVENT", "TRUE")
-            cal.add_component(event)
+                event = Event()
+                event.add("summary", "📋 Westerhever-Zeiten")
+                event.add("dtstart", current_date)
+                event.add("dtend", current_date + timedelta(days=1))
+                event.add("uid", f"{current_date.strftime('%Y%m%d')}-westerhever@fotozeiten.de")
+                event.add("dtstamp", datetime.now(pytz.utc))
+                event.add("description", "\n".join(beschreibungsteile))
+                event.add("TRANSP", "TRANSPARENT")
+                event.add("X-MICROSOFT-CDO-ALLDAYEVENT", "TRUE")
+                event.add("X-APPLE-STRUCTURED-LOCATION", "")
+                cal.add_component(event)
+                print(f"✔️ Tages-Event für {current_date} hinzugefügt.")
+            else:
+                print(f"⚠️ Kein Tages-Event für {current_date} – keine Daten vorhanden.")
 
-            print(f"✔️ Tages-Event für {current_date} hinzugefügt.")
         except Exception as e:
             print(f"⚠️ Fehler bei {current_date}: {e}")
 
         current_date += timedelta(days=1)
 
-    # Extreme Wetterwarnungen als separate Events (max. 7 Tage)
+    # Zeitbasierte Wetterwarnungen
     if owm_api_key:
         extreme_alerts = get_extreme_alerts(location.latitude, location.longitude, owm_api_key)
         for alert in extreme_alerts:
-            event = Event()
-            event.add("summary", f"⚠️ {alert['title']}")
-            event.add("dtstart", alert['start'])
-            event.add("dtend", alert['end'])
-            event.add("dtstamp", datetime.now(pytz.utc))
-            event.add("description", alert['description'])
-            event.add("uid", f"extreme-{alert['start'].strftime('%Y%m%d')}-{alert['title'].lower()}@fotozeiten.de")
-            cal.add_component(event)
-            print(f"⚠️ Extremwarnung hinzugefügt: {alert['title']} von {alert['start']} bis {alert['end']}")
+            try:
+                event = Event()
+                event.add("summary", f"⚠️ {alert['title']}")
+                event.add("dtstart", alert['start'])
+                event.add("dtend", alert['end'])
+                event.add("dtstamp", datetime.now(pytz.utc))
+                event.add("description", alert['description'])
+                event.add("uid", f"extreme-{alert['start'].strftime('%Y%m%d')}-{alert['title'].lower()}@fotozeiten.de")
+                cal.add_component(event)
+                print(f"⚠️ Extremwarnung hinzugefügt: {alert['title']} von {alert['start']} bis {alert['end']}")
+            except Exception as e:
+                print(f"⚠️ Fehler beim Hinzufügen der Extremwarnung {alert['title']}: {e}")
 
+    # ICS-Datei speichern
     os.makedirs("docs", exist_ok=True)
     kalender_pfad = "docs/fotozeiten-westerhever.ics"
     with open(kalender_pfad, "wb") as f:
@@ -203,5 +195,13 @@ def generate_calendar():
     print(f"📅 Kalender erstellt: {kalender_pfad}")
     print(f"✅ Gesamtzahl der Kalendereinträge: {len(cal.subcomponents)}")
 
+
+# ---------------------- Testausführung für 7 Tage ----------------------
 if __name__ == "__main__":
+    # Test-Zeitraum: heute + 6 Tage (7 Tage)
+    start_date = datetime.now(tz).date()
+    end_date = start_date + timedelta(days=6)
+
+    print(f"ℹ️ Kalendererstellung für {start_date} bis {end_date}")
     generate_calendar()
+    print("✅ Test-Kalender für 7 Tage erstellt. Datei liegt in docs/fotozeiten-westerhever.ics")
