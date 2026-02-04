@@ -3,16 +3,18 @@ VERSION:2.0
 PRODID:-//Fotozeiten//Wetterwarnung Westerhever//
 BEGIN:VEVENT
 SUMMARY:⚠️ Wetterwarnung Westerhever
-DTSTART;TZID=Europe/Berlin:20260203T064358
-DTEND;TZID=Europe/Berlin:20260203T074358
-DTSTAMP:20260203T054358Z
-UID:wetterwarnung-20260203@fotozeiten
+DTSTART;TZID=Europe/Berlin:20260204T064119
+DTEND;TZID=Europe/Berlin:20260204T074119
+DTSTAMP:20260204T054119Z
+UID:wetterwarnung-20260204@fotozeiten
 DESCRIPTION:frost: There is a risk of frost (level 1 of 2).\nMinimum tempe
- rature: -5 - -9 °C | wind gusts: There is a risk of wind gusts (level 1 o
- f 4).\nMax. gusts: ~ 55 km/h\; Wind direction: east then south-east\; Incr
- eased gusts: in exposed locations ~ 65 km/h | gale-force gusts: There is a
-  risk of gale-force gusts (level 2 of 4).\nMax. gusts: ~ 65 km/h\; Wind di
- rection: south-east\; Increased gusts: in exposed locations ~ 80 km/h
+ rature: -4 - -6 °C | icy surfaces: There is a risk of icy surfaces (level
+  1 of 4). | light snowfall: There is a risk of light snowfall (level 1 of 
+ 4).\nPrecipitation amounts: 1-3 cm | gale-force gusts: There is a risk of 
+ gale-force gusts (level 2 of 4).\nMax. gusts: 50-65 km/h\; Wind direction:
+  south-east | wind gusts: There is a risk of wind gusts (level 1 of 4).\nM
+ ax. gusts: ~ 55 km/h\; Wind direction: south-east\; Increased gusts: in ex
+ posed locations ~ 65 km/h
 LOCATION:Westerhever\, Deutschland
 END:VEVENT
 END:VCALENDAR
