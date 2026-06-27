@@ -3,10 +3,10 @@ VERSION:2.0
 PRODID:-//Fotozeiten//Wetterwarnung Westerhever//
 BEGIN:VEVENT
 SUMMARY:⚠️ Wetterwarnung Westerhever
-DTSTART;TZID=Europe/Berlin:20260626T102523
-DTEND;TZID=Europe/Berlin:20260626T112523
-DTSTAMP:20260626T082523Z
-UID:wetterwarnung-20260626@fotozeiten
+DTSTART;TZID=Europe/Berlin:20260627T094323
+DTEND;TZID=Europe/Berlin:20260627T104323
+DTSTAMP:20260627T074323Z
+UID:wetterwarnung-20260627@fotozeiten
 DESCRIPTION:strong heat: The expected weather will bring a situation of st
  rong heat stress. (level 1 of 3)\nHeight range: < 200 m
 LOCATION:Westerhever\, Deutschland
