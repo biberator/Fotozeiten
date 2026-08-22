@@ -3,12 +3,13 @@ VERSION:2.0
 PRODID:-//Fotozeiten//Wetterwarnung Westerhever//
 BEGIN:VEVENT
 SUMMARY:⚠️ Wetterwarnung Westerhever
-DTSTART;TZID=Europe/Berlin:20260819T072101
-DTEND;TZID=Europe/Berlin:20260819T082101
-DTSTAMP:20260819T052101Z
-UID:wetterwarnung-20260819@fotozeiten
-DESCRIPTION:wind gusts: There is a risk of wind gusts (level 1 of 4).\nOcc
- urrence: near showers\; Max. gusts: ~ 55 km/h\; Wind direction: west
+DTSTART;TZID=Europe/Berlin:20260822T071828
+DTEND;TZID=Europe/Berlin:20260822T081828
+DTSTAMP:20260822T051828Z
+UID:wetterwarnung-20260822@fotozeiten
+DESCRIPTION:wind gusts: There is a risk of wind gusts (level 1 of 4).\nMax
+ . gusts: ~ 55 km/h\; Wind direction: north-west\; Increased gusts: near sh
+ owers and in exposed locations ~ 70 km/h
 LOCATION:Westerhever\, Deutschland
 END:VEVENT
 END:VCALENDAR
