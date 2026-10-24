@@ -3,13 +3,12 @@ VERSION:2.0
 PRODID:-//Fotozeiten//Wetterwarnung Westerhever//
 BEGIN:VEVENT
 SUMMARY:⚠️ Wetterwarnung Westerhever
-DTSTART;TZID=Europe/Berlin:20261023T114032
-DTEND;TZID=Europe/Berlin:20261023T124032
-DTSTAMP:20261023T094032Z
-UID:wetterwarnung-20261023@fotozeiten
+DTSTART;TZID=Europe/Berlin:20261024T111318
+DTEND;TZID=Europe/Berlin:20261024T121318
+DTSTAMP:20261024T091318Z
+UID:wetterwarnung-20261024@fotozeiten
 DESCRIPTION:wind gusts: There is a risk of wind gusts (level 1 of 4).\nMax
- . gusts: < 60 km/h\; Wind direction: south-east\; Increased gusts: near sh
- owers and in exposed locations < 70 km/h
+ . gusts: < 60 km/h\; Wind direction: south then south-west
 LOCATION:Westerhever\, Deutschland
 END:VEVENT
 END:VCALENDAR
