@@ -2,9 +2,9 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Wetterwarnungen Fotozeiten//
 BEGIN:VEVENT
-SUMMARY:5 Tage Regen in Rebild Baker
-DTSTART;VALUE=DATE:20261024
-DTEND;VALUE=DATE:20261025
-DESCRIPTION:Seit 5 Tagen durchgehend Regen vorhergesagt.
+SUMMARY:3 Tage Regen in Rebild Baker
+DTSTART;VALUE=DATE:20261025
+DTEND;VALUE=DATE:20261026
+DESCRIPTION:Seit 3 Tagen durchgehend Regen vorhergesagt.
 END:VEVENT
 END:VCALENDAR
