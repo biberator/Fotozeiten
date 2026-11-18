@@ -3,17 +3,19 @@ VERSION:2.0
 PRODID:-//Fotozeiten//Wetterwarnung Westerhever//
 BEGIN:VEVENT
 SUMMARY:⚠️ Wetterwarnung Westerhever
-DTSTART;TZID=Europe/Berlin:20261117T150011
-DTEND;TZID=Europe/Berlin:20261117T160011
-DTSTAMP:20261117T140011Z
-UID:wetterwarnung-20261117@fotozeiten
-DESCRIPTION:wind gusts: There is a risk of wind gusts (level 1 of 4).\nMax
- . gusts: ~ 55 km/h\; Wind direction: east then south-east\; Increased gust
- s: in exposed locations < 70 km/h | wind gusts: There is a risk of wind gu
- sts (level 1 of 4).\nMax. gusts: ~ 55 km/h\; Wind direction: south-east\; 
- Increased gusts: in exposed locations < 70 km/h | wind gusts: There is a r
- isk of wind gusts (level 1 of 4).\nMax. gusts: ~ 55 km/h\; Wind direction:
-  south-east then south-west
+DTSTART;TZID=Europe/Berlin:20261118T143436
+DTEND;TZID=Europe/Berlin:20261118T153436
+DTSTAMP:20261118T133436Z
+UID:wetterwarnung-20261118@fotozeiten
+DESCRIPTION:storm-force gusts: There is a risk of storm-force gusts (level
+  2 of 4).\nMax. gusts: 80-95 km/h\; Wind direction: south-west then north-
+ west\; Increased gusts: near showers and in exposed locations < 110 km/h |
+  gale-force gusts: There is a risk of gale-force gusts (level 2 of 4).\nMa
+ x. gusts: 50-70 km/h\; Wind direction: north-west\; Increased gusts: near 
+ showers and in exposed locations < 80 km/h | wind gusts: There is a risk o
+ f wind gusts (level 1 of 4).\nMax. gusts: ~ 55 km/h\; Wind direction: nort
+ h then north-west\; Increased gusts: near showers and in exposed locations
+  < 65 km/h
 LOCATION:Westerhever\, Deutschland
 END:VEVENT
 END:VCALENDAR
